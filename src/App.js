@@ -1,13 +1,18 @@
-import Header from './components/Header';
 import Footer from './components/Footer';
 import Login from './components/Login';
-
+import MenuPrincipal from './components/MenuPrincipal';
+import {BrowserRouter, Routes, Route} from 'react-router-dom';
 function App() {
   return (
    <>
-      <Header/>
-      <Login/>
-      <Footer/>
+      <BrowserRouter>
+          <Routes>
+            <Route exact path="/" element={<Login/>}/>
+            <Route exact path="menu" element={<MenuPrincipal/>}/>
+          </Routes>
+        <Footer/> 
+      </BrowserRouter>
+      
    </>
   );
 }
