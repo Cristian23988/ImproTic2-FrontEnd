@@ -1,6 +1,6 @@
-import Footer from './components/Footer';
 import Login from './components/Login';
-import MenuPrincipal from './components/MenuPrincipal';
+import Home from './components/views/Home';
+import Usuarios from './components/views/Usuarios';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import RegistroUsuarios from "./components/RegistroUsuarios"
 function App() {
@@ -9,12 +9,12 @@ function App() {
       <BrowserRouter>
           <Routes>
             <Route exact path="/" element={<Login/>}/>
-            <Route exact path="menu" element={<MenuPrincipal/>}/>
+            <Route exact path="menu/home" element={<Home/>}/>
+            <Route exact path="menu/usuarios" element={<Usuarios/>}/>
             <Route exact path="Registro" element={<RegistroUsuarios/>}/>
           </Routes>
-        <Footer/> 
-      </BrowserRouter>
-      
+          
+      </BrowserRouter>    
    </>
   );
 }

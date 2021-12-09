@@ -2,12 +2,15 @@ import { Container } from "react-bootstrap";
 import Boton from "./Buttons";
 import IconEmail from "../images/Icons/IconEmail";
 import IconClave from "../images/Icons/IconClave";
+import IconLogin from "../images/Icons/IconLogin";
 import Header from "./Header";
 import Formm from "react-bootstrap/Form";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
-import { string } from "yup";
+// import { string } from "yup";
 import Error from "./Error";
+import Footer from './Footer';
+
 const Login = () => {
   const handleSubmit = (values) => {
     console.log("Arreglo" + values);
@@ -19,7 +22,7 @@ const Login = () => {
   return (
     <>
       <Header />
-      <Container className="d-flex justify-content-center align-items-center">
+      <Container className="d-flex justify-content-center align-items-center vh-100 ">
         <Formik
           initialValues={{
             email: "",
@@ -32,7 +35,7 @@ const Login = () => {
         >
           {({ errors, touched }) => {
             return (
-              <Form className="w-25 mt-5 border p-5 bg-light shadow">
+              <Form className="w-25  border p-5 bg-light shadow">
                 <Formm.Group className="mb-3" controlId="formBasicEmail">
                   <Formm.Label className="fw-bold">
                     <IconEmail /> Email usuario
@@ -66,13 +69,15 @@ const Login = () => {
                   variante="primary"
                   tipo="submit"
                   clase="w-100"
-                  valor="Ingresar"
-                />
+                >
+                  <IconLogin/>{' '}Ingresar
+                </Boton>
               </Form>
             );
           }}
         </Formik>
       </Container>
+      <Footer/>
     </>
   );
 };

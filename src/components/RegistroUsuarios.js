@@ -8,9 +8,12 @@ import IconNombre from "../images/Icons/IconNombre";*/
 import Boton from "./Buttons";
 import Header from "./Header";
 import Error from "./Error";
-import { useState } from "react";
+// import { useState } from "react";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
+import Footer from './Footer';
+import IconRegistrer from "../images/Icons/IconRegistrer";
+
 const RegistroUsuarios = () => {
   //Funcion para el sumbit
 
@@ -43,7 +46,7 @@ const RegistroUsuarios = () => {
   return (
     <>
       <Header />
-      <Container className="d-flex justify-content-center align-items-center ">
+      <Container className="d-flex justify-content-center align-items-center vh-100">
         <Formik
           initialValues={{
             email: "",
@@ -65,7 +68,6 @@ const RegistroUsuarios = () => {
                 <Formm.Group className="m-3">
                   <Formm.Label className="fw-bold">Email</Formm.Label>
                   <Field
-                    className="form-control"
                     className="form-control"
                     type="email"
                     name="email"
@@ -143,13 +145,15 @@ const RegistroUsuarios = () => {
                   variante="primary"
                   tipo="submit"
                   clase="w-100"
-                  valor="Registrarse"
-                />
+                >
+                  <IconRegistrer/>{' '}Registrarse
+                </Boton>
               </Form>
             );
           }}
         </Formik>
       </Container>
+      <Footer/>
     </>
   );
 };
