@@ -17,6 +17,16 @@
       "rol": "estudiante",
       "clave": "123456",
       "id": 2
+    },
+    {
+      "email": "diegofelipem99@gmail.com",
+      "name": "Carlos",
+      "lastName": "Felipe",
+      "fullName": "DASDAS",
+      "role": "administrador",
+      "status": "pending",
+      "password": "ASDQWASSA",
+      "id": 3
     }
   ]
 }
