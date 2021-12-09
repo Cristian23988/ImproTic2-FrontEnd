@@ -1,0 +1,22 @@
+{
+  "usuarios": [
+    {
+      "email": "diegofelipem99@gmail.com",
+      "nombre": "Diego ",
+      "apellido": "Muñoz",
+      "nombrecompleto": "Diego Felipe Muñoz",
+      "rol": "administrador",
+      "clave": "diego1234",
+      "id": 1
+    },
+    {
+      "email": "prueba@gmail.com",
+      "nombre": "Cristiano ",
+      "apellido": "Ronaldo",
+      "nombrecompleto": "Leon Messi",
+      "rol": "estudiante",
+      "clave": "123456",
+      "id": 2
+    }
+  ]
+}
