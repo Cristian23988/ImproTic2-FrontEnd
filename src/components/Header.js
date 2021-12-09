@@ -20,7 +20,7 @@ const Header=() =>{
                             <IconLogin/>{' '}
                             Login
                         </Link>
-                        <Link to="/" className="nav-item nav-link">
+                        <Link to="Registro" className="nav-item nav-link">
                             <IconRegistrer/>{' '}
                             Resgistro
                         </Link>
