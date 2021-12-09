@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
-    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+    <Navbar collapseOnSelect  expand="lg" bg="dark" variant="dark" className=" position-fixed w-100 top-0">
       <Container>
         <Navbar.Brand href="#home">
           <img
@@ -22,7 +22,7 @@ const Header = () => {
           id="responsive-navbar-nav"
           className="d-flex justify-content-end"
         >
-          <Nav>
+          <Nav >
             <Link to="/" className="nav-item nav-link">
               <IconLogin /> Login
             </Link>

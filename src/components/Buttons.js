@@ -1,9 +1,8 @@
 import {Button} from 'react-bootstrap'; 
-import IconLogin from '../images/Icons/IconLogin'
 
-const Buttons = ({variante, tipo, clase, valor}) => (
+const Buttons = ({variante, tipo, clase, children}) => (
     <Button variant={variante} type={tipo} className={clase}>
-       <IconLogin/>{' '+valor}
+      {children}
     </Button>
 );
 export default Buttons;
