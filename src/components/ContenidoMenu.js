@@ -4,7 +4,7 @@ const ContenidoMenu=({children})=>{
         height: '90%'
     }
     return(
-        <div className="d-flex justify-content-center align-items-center flex-column position-absolute bottom-0 end-0 bg-white" style={dimensiones}>
+        <div className="d-flex justify-content-center align-items-center flex-column position-absolute bottom-0  end-0 bg-white" style={dimensiones}>
             {children}
         </div>
     )
