@@ -10,7 +10,7 @@ import { string } from "yup";
 import Error from "./Error";
 const Login = () => {
   const handleSubmit = (values) => {
-    console.log(values);
+    console.log("Arreglo" + values);
   };
   const inicioSesion = Yup.object().shape({
     email: Yup.string().email("Email no valiod").required("Ingresa tu email !"),
