@@ -19,7 +19,7 @@ const MenuPrincipal = () => {
         width:'15%'
     }
     //states de los  links activo
-    const [linkHome, setLinkHome]=useState('active');
+    const [linkHome, setLinkHome]=useState('');
     const [linkUsuarios, setLinkUsuarios]=useState('');
     const [linkProyectos, setLinkProyectos]=useState('');
     const [linkEstudiantes, setLinkEstudiantes]=useState('');
@@ -37,14 +37,19 @@ const MenuPrincipal = () => {
             setLinkProyectos('active')
             setLinkEstudiantes('')
             setLinkHome('')
-        }else if(URLactual==='http://localhost:3000/estudiantes'){
+        }else if(URLactual==='http://localhost:3000/menu/estudiantes'){
             setLinkUsuarios('')
             setLinkProyectos('')
             setLinkEstudiantes('active')
             setLinkHome('')
-        }           
+        }else{
+            setLinkUsuarios('')
+            setLinkProyectos('')
+            setLinkEstudiantes('')
+            setLinkHome('active')
+        }         
     },[]);
-    
+
     return (
         <>
             <BarraPerfil/>
@@ -75,7 +80,7 @@ const MenuPrincipal = () => {
                     <IconUsuarios/>{' '}
                     Usuarios
                 </Link>
-                <Link  to="#" className={`${linkProyectos} nav-link text-white text-center`} 
+                <Link  to="/menu/proyectos" className={`${linkProyectos} nav-link text-white text-center`} 
                 onClick={()=>{
                     setLinkUsuarios('')
                     setLinkHome('')
@@ -85,7 +90,7 @@ const MenuPrincipal = () => {
                     <IconProyectos/>{' '}
                     Proyectos
                 </Link>
-                <Link  to="#"  className={`${linkEstudiantes} nav-link text-white text-center`} 
+                <Link  to="/menu/estudiantes"  className={`${linkEstudiantes} nav-link text-white text-center`} 
                 onClick={()=>{
                     setLinkUsuarios('')
                     setLinkHome('')
