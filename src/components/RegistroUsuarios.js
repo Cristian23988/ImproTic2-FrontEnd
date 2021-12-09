@@ -94,7 +94,7 @@ const RegistroUsuarios = () => {
           </Form.Group>
           <Form.Group className="m-3">
             <Form.Label className="fw-bold">Rol</Form.Label>
-            <Form.Select value={rol} onChange={datosForm} value="rol">
+            <Form.Select value={rol} onChange={datosForm} name="rol">
               <option value="">--Selecciona un rol--</option>
               <option value="administrador">Administrador</option>
               <option value="estudiante">Estudiante</option>
@@ -105,7 +105,7 @@ const RegistroUsuarios = () => {
             <Form.Label className="fw-bold">Contraseña</Form.Label>
             <Form.Control
               type="password"
-              value="contraseña"
+              name="contraseña"
               placeholder="Ingresa tu nombre contraseña"
               value={contraseña}
               onChange={datosForm}
