@@ -10,12 +10,17 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route exact path="/" element={<Login />} />
-          <Route exact path="menu/home" element={<Home />} />
-          <Route exact path="menu/usuarios" element={<Usuarios />} />
-          <Route exact path="menu/proyectos" element={<Proyectos />} />
-          <Route exact path="menu/estudiantes" element={<Estudiantes />} />
-          <Route exact path="Registro" element={<RegistroUsuarios />} />
+          <Route>
+            <Route index path="/" element={<Login />} />
+            <Route exact path="registro" element={<RegistroUsuarios />} />
+          </Route>
+
+          <Route>
+            <Route index path="menu/home" element={<Home />} />
+            <Route exact path="menu/usuarios" element={<Usuarios />} />
+            <Route exact path="menu/proyectos" element={<Proyectos />} />
+            <Route exact path="menu/estudiantes" element={<Estudiantes />} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </>
