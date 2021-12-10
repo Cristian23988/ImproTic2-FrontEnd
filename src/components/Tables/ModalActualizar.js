@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { Container, Form } from "react-bootstrap";
+
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import RegistroUsuarios from "../RegistroUsuarios";
+import IconActualizar from "../../images/Icons/IconActulizar";
 const ModalActualizar = () => {
   const [show, setShow] = useState(false);
 
@@ -11,15 +13,38 @@ const ModalActualizar = () => {
   return (
     <>
       <Button variant="warning text-white" onClick={handleShow}>
-        Editar
+        <IconActualizar /> Editar
       </Button>
 
       <Modal show={show} onHide={handleClose} animation={false}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>Actualizar Usuario</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <RegistroUsuarios />
+          <Form.Group className="m-2">
+            <Form.Label className="fw-bold">Email</Form.Label>
+            <Form.Control type="email" name="email" />
+          </Form.Group>
+          <Form.Group className="m-2">
+            <Form.Label className="fw-bold">Identificacion</Form.Label>
+            <Form.Control type="email" name="email" />
+          </Form.Group>
+          <Form.Group className="m-2">
+            <Form.Label className="fw-bold">Nombre</Form.Label>
+            <Form.Control type="email" name="email" />
+          </Form.Group>
+          <Form.Group className="m-2">
+            <Form.Label className="fw-bold">Apellido</Form.Label>
+            <Form.Control type="email" name="email" />
+          </Form.Group>
+          <Form.Group className="m-2">
+            <Form.Label className="fw-bold">Nombre completo</Form.Label>
+            <Form.Control type="email" name="email" />
+          </Form.Group>{" "}
+          <Form.Group className="m-2">
+            <Form.Label className="fw-bold">clave</Form.Label>
+            <Form.Control type="email" name="email" />
+          </Form.Group>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="primary" onClick={handleClose}>

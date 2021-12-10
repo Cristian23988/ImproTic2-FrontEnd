@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
+import IconEliminar from "../../images/Icons/IconEliminar";
 const ModalEliminar = () => {
   const [show, setShow] = useState(false);
 
@@ -10,7 +11,7 @@ const ModalEliminar = () => {
   return (
     <>
       <Button variant="danger" onClick={handleShow}>
-        Eliminar
+        <IconEliminar /> Eliminar
       </Button>
 
       <Modal show={show} onHide={handleClose}>
