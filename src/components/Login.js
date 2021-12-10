@@ -10,15 +10,19 @@ import * as Yup from "yup";
 // import { string } from "yup";
 import Error from "./Error";
 import Footer from './Footer';
+import {useState} from 'react';
 
 const Login = () => {
   const handleSubmit = (values) => {
     console.log("Arreglo" + values);
   };
   const inicioSesion = Yup.object().shape({
-    email: Yup.string().email("Email no valiod").required("Ingresa tu email !"),
+    email: Yup.string().email("Email no valido!").required("Ingresa tu email !"),
     clave: Yup.string().required("Ingresa tu clave !"),
   });
+  const[claseErrorEmail, setClaseError]=useState('');
+  const[claseErrorClave, setClaseErrorClave]=useState('');
+  
   return (
     <>
       <Header />
@@ -44,11 +48,12 @@ const Login = () => {
                     type="email"
                     placeholder="Ingresa tu email"
                     name="email"
-                    className="form-control"
+                    className={`form-control ${claseErrorEmail}`}
                   />
                   {errors.email && touched.email ? (
                     <Error>{errors.email}</Error>
-                  ) : null}
+                  ): null}
+                  {errors.email && touched.email ? setClaseError('border border-danger border-2'):setClaseError('')}
                 </Formm.Group>
 
                 <Formm.Group className="mb-3" controlId="formBasicPassword">
@@ -59,11 +64,12 @@ const Login = () => {
                     type="password"
                     placeholder="Ingresa tu contraseña"
                     name="clave"
-                    className="form-control"
+                    className={`form-control ${claseErrorClave}`}
                   />
                   {errors.clave && touched.clave ? (
                     <Error>{errors.clave}</Error>
                   ) : null}
+                  {errors.clave && touched.clave ? setClaseErrorClave('border border-danger border-2'):setClaseErrorClave('')}
                 </Formm.Group>
                 <Boton
                   variante="primary"
