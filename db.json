@@ -27,6 +27,17 @@
       "status": "pending",
       "password": "ASDQWASSA",
       "id": 3
+    },
+    {
+      "email": "diegofelipem99@gmail.com",
+      "documentId": "1058788349",
+      "name": "Diego",
+      "lastName": "Mosquera",
+      "fullName": "Diego Felipe",
+      "role": "administrador",
+      "status": "pending",
+      "password": "1234151",
+      "id": 4
     }
   ]
 }
