@@ -36,6 +36,7 @@ const RegistroUsuarios = () => {
     email: Yup.string()
       .email("Email no valido")
       .required("El email es obligatorio!"),
+    documentId: Yup.number().required("La identificacion es obligatoria"),
     name: Yup.string().required("El nombre es obligatorio"),
     lastName: Yup.string().required("El apellido es obligatorio"),
     fullName: Yup.string().required("El nombre completo es obligatorio"),
@@ -46,10 +47,11 @@ const RegistroUsuarios = () => {
   return (
     <>
       <Header />
-      <Container className="d-flex justify-content-center align-items-center vh-100">
+      <Container className="d-flex justify-content-center align-items-center vh-100 mt-5 ">
         <Formik
           initialValues={{
             email: "",
+            documentId: "",
             name: "",
             lastName: "",
             fullName: "",
@@ -66,7 +68,7 @@ const RegistroUsuarios = () => {
           {({ errors, touched }) => {
             return (
               <Form className="w-50 mt-3 border p-5 bg-light shadow ">
-                <Formm.Group className="m-3">
+                <Formm.Group className="m-2">
                   <Formm.Label className="fw-bold">Email</Formm.Label>
                   <Field
                     className="form-control"
@@ -79,7 +81,20 @@ const RegistroUsuarios = () => {
                   ) : null}
                 </Formm.Group>
 
-                <Formm.Group className="m-3">
+                <Formm.Group className="m-2">
+                  <Formm.Label className="fw-bold">Identificacion</Formm.Label>
+                  <Field
+                    className="form-control"
+                    type="number"
+                    name="documentId"
+                    placeholder="Ingresa tu identificacion"
+                  />
+                  {errors.documentId && touched.documentId ? (
+                    <Error>{errors.documentId}</Error>
+                  ) : null}
+                </Formm.Group>
+
+                <Formm.Group className="m-2">
                   <Formm.Label className="fw-bold">Nombre</Formm.Label>
                   <Field
                     className="form-control"
@@ -92,7 +107,7 @@ const RegistroUsuarios = () => {
                   ) : null}
                 </Formm.Group>
 
-                <Formm.Group className="m-3">
+                <Formm.Group className="m-2">
                   <Formm.Label className="fw-bold">Apellido</Formm.Label>
                   <Field
                     className="form-control"
@@ -104,7 +119,7 @@ const RegistroUsuarios = () => {
                     <Error>{errors.lastName}</Error>
                   ) : null}
                 </Formm.Group>
-                <Formm.Group className="m-3">
+                <Formm.Group className="m-2">
                   <Formm.Label className="fw-bold">Nombre Completo</Formm.Label>
                   <Field
                     className="form-control"
@@ -117,7 +132,7 @@ const RegistroUsuarios = () => {
                   ) : null}
                 </Formm.Group>
 
-                <Formm.Group className="m-3">
+                <Formm.Group className="m-2">
                   <Formm.Label className="fw-bold">Rol</Formm.Label>
                   <Field as="select" name="role" className="form-control">
                     <option value="">--Selecciona un rol--</option>
@@ -130,7 +145,7 @@ const RegistroUsuarios = () => {
                   ) : null}
                 </Formm.Group>
 
-                <Formm.Group className="m-3">
+                <Formm.Group className="m-2">
                   <Formm.Label className="fw-bold">Clave</Formm.Label>
                   <Field
                     className="form-control"

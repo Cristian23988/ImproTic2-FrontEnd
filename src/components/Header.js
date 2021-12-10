@@ -2,9 +2,10 @@ import IconLogin from "../images/Icons/IconLogin";
 import IconRegistrer from "../images/Icons/IconRegistrer";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import Logo from "../images/Logo.PNG";
-import { Link } from "react-router-dom";
-
+import { Link, useLocation } from "react-router-dom";
 const Header = () => {
+  const location = useLocation();
+  const urlActual = location.pathname;
   return (
     <Navbar
       collapseOnSelect
@@ -32,7 +33,12 @@ const Header = () => {
             <Link to="/" className="nav-item nav-link">
               <IconLogin /> Login
             </Link>
-            <Link to="registro" className="nav-item nav-link">
+            <Link
+              to="/registro"
+              className={`${
+                urlActual === "/registro" ? "text-white" : "nav-item nav-link"
+              } nav-item nav-link`}
+            >
               <IconRegistrer /> Registro
             </Link>
           </Nav>
