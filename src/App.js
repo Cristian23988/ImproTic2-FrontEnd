@@ -5,6 +5,7 @@ import Proyectos from "./components/views/Proyectos";
 import Estudiantes from "./components/views/Estudiantes";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import RegistroUsuarios from "./components/RegistroUsuarios";
+
 function App() {
   return (
     <>
