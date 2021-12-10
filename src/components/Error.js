@@ -1,6 +1,6 @@
 import Alert from "react-bootstrap/Alert";
 const Error = ({ children }) => {
-  return <Alert variant="danger" className="mt-4">{children}</Alert>;
+  return <p className="mt-1 text-danger">{children}</p>;
 };
 
 export default Error;
