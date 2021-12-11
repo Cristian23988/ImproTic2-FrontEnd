@@ -11,7 +11,7 @@ const Usuarios = () => {
   //estado para el modal de actualizar
   const [show, setShow] = useState(false);
   //hook para pasar la info del proyecto al modal de editar
-  const [estadoEditar, setEstadoEditar]= useState({});
+  const [estadoEditar, setEstadoEditar] = useState({});
   useEffect(() => {
     const consultaUrl = async () => {
       try {
@@ -47,12 +47,7 @@ const Usuarios = () => {
             </thead>
             <tbody>
               {datos.map((dato) => (
-                <RecordUsuario
-                  key={dato.id}
-                  dato={dato}
-                  setShow={setShow}
-                  setEstadoEditar={setEstadoEditar}
-                />
+                <RecordUsuario key={dato.id} dato={dato} setShow={setShow} />
               ))}
             </tbody>
           </Table>
@@ -63,10 +58,7 @@ const Usuarios = () => {
         setShow={setShow}
         show={show}
       >
-        <ActualizarStatus 
-          setShow={setShow} 
-          estadoEditar={estadoEditar}
-        />
+        <ActualizarStatus setShow={setShow} estadoEditar={estadoEditar} />
       </VentanaModal>
     </>
   );
