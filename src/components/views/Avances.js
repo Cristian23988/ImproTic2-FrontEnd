@@ -42,7 +42,7 @@ const Avances = () => {
             </thead>
             <tbody>
               {datos.map((dato) => (
-                <RecordAvance key={dato.id} dato={dato} />
+                <RecordAvance key={dato.id} dato={dato} setShow={setShow} />
               ))}
             </tbody>
           </Table>

@@ -1,4 +1,6 @@
 import Button from "react-bootstrap/Button";
+import IconAvance from "../../images/Icons/IconAvance";
+import IconModificar from "../../images/Icons/IconModificar";
 const RecorAvance = ({ dato, setShow }) => {
   const { project_id, addDate, description, observations, id } = dato;
   return (
@@ -10,7 +12,7 @@ const RecorAvance = ({ dato, setShow }) => {
       <td>{observations}</td>
       <td>
         <button className="btn btn-primary " onClick={setShow}>
-          E
+          <IconAvance />
         </button>
       </td>
     </tr>
