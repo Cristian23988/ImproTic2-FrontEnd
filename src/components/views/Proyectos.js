@@ -3,8 +3,23 @@ import ContenidoMenu from "../ContenidoMenu";
 import Footer from "../Footer";
 import { Table } from "react-bootstrap";
 import RecordProyectos from "../Tables/RecordProyectos";
+import React, { useState, useEffect } from "react";
 
 const Proyectos = () => {
+  const [datos, setdatos] = useState([]);
+  useEffect(() => {
+    const consultaUrl = async () => {
+      try {
+        const url = `http://localhost:4000/projectos`;
+        const respuesta = await fetch(url);
+        const resultado = await respuesta.json();
+        setdatos(resultado);
+      } catch (error) {
+        console.log("ocurrio un erro " + error);
+      }
+    };
+    consultaUrl();
+  }, []);
   return (
     <>
       <Menu />
@@ -26,12 +41,12 @@ const Proyectos = () => {
               </tr>
             </thead>
             <tbody>
-                <RecordProyectos/>
-                <RecordProyectos/>
-                <RecordProyectos/>
+              {datos.map((dato) => (
+                <RecordProyectos key={dato.id} dato={dato} />
+              ))}
             </tbody>
           </Table>
-        </div>        
+        </div>
       </ContenidoMenu>
       <div className="position-absolute bottom-0 w-100 h-auto">
         <Footer />
