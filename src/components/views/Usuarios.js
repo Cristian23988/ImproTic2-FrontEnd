@@ -46,11 +46,7 @@ const Usuarios = () => {
             </thead>
             <tbody>
               {datos.map((dato) => (
-                <RecordUsuario
-                  key={dato.id}
-                  dato={dato}
-                  setShow={setShow}
-                />
+                <RecordUsuario key={dato.id} dato={dato} setShow={setShow} />
               ))}
             </tbody>
           </Table>
