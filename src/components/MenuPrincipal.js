@@ -7,6 +7,8 @@ import IconAvance from "../images/Icons/IconAvance";
 import IconProyectos from "../images/Icons/IconProyectos";
 import IconInscripcion from "../images/Icons/IconInscripcion";
 import BarraPerfil from "./BarraPerfil";
+import ActualizarUsuario from "./Formularios/ActualizarUsuario";
+import VentanaModal from "./VentanaModal";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 
@@ -25,7 +27,8 @@ const MenuPrincipal = () => {
   const [linkProyectos, setLinkProyectos] = useState("");
   const [linkAvances, setLinkAvances] = useState("");
   const [linkInscripciones, setLinkInscripciones] = useState("");
-
+  //estado para el modal de actualizar
+  const [show, setShow] = useState(false);
   var URLactual = window.location.href;
 
   useEffect(() => {
@@ -47,7 +50,7 @@ const MenuPrincipal = () => {
       setLinkAvances("active");
       setLinkHome("");
       setLinkInscripciones("");
-    }else if (URLactual === "http://localhost:3000/menu/inscripciones") {
+    } else if (URLactual === "http://localhost:3000/menu/inscripciones") {
       setLinkUsuarios("");
       setLinkProyectos("");
       setLinkAvances("");
@@ -64,7 +67,14 @@ const MenuPrincipal = () => {
 
   return (
     <>
-      <BarraPerfil />
+      <BarraPerfil setShow={setShow} />
+      <VentanaModal
+        titulo="Actualizar Estado Usuario"
+        setShow={setShow}
+        show={show}
+      >
+        <ActualizarUsuario setShow={setShow} />
+      </VentanaModal>
       <div
         className="nav-item text-white bg-primary position-absolute p-5 top-0 start-0 d-flex justify-content-center align-items-center"
         style={encabezado}
