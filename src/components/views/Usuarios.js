@@ -1,16 +1,17 @@
 import Menu from "../MenuPrincipal";
 import ContenidoMenu from "../ContenidoMenu";
-import VentanaModal from "../VentanaModal";
 import RecordUsuario from "../Tables/RecordUsuario";
 import { useEffect, useState } from "react";
 import ActualizarStatus from "../Formularios/ActualizarStatus";
+import VentanaModal from "../VentanaModal";
+
 import { Table } from "react-bootstrap";
 const Usuarios = () => {
   const [datos, setdatos] = useState([]);
-
   //estado para el modal de actualizar
   const [show, setShow] = useState(false);
-
+  //hook para pasar la info del proyecto al modal de editar
+  const [estadoEditar, setEstadoEditar] = useState({});
   useEffect(() => {
     const consultaUrl = async () => {
       try {
@@ -57,7 +58,7 @@ const Usuarios = () => {
         setShow={setShow}
         show={show}
       >
-        <ActualizarStatus setShow={setShow} />
+        <ActualizarStatus setShow={setShow} estadoEditar={estadoEditar} />
       </VentanaModal>
     </>
   );

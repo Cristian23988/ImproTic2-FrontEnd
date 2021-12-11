@@ -2,14 +2,10 @@ import Button from "react-bootstrap/Button";
 import ObjetivosEspecificos from "./ObjetivosEspecificos"
 import VentanaModal from '../VentanaModal';
 import {useState} from 'react'
-import ActualizarProyecto from '../Formularios/ActualizarProyecto';
 
-const RecordProyectos = ({ dato }) => {
+const RecordProyectos = ({ dato, setProyectoEditar, setShowEditar }) => {
     const [showObjetivos, setShowObjetives]= useState(false);
-    const [showEditar, setShowEditar]= useState(false);
-    //hook para pasar la info del proyecto al modal de editar
-    const [proyectoEditar, setProyectoEditar]= useState({});
-    
+
     const {
         name,
         generalObjective,
@@ -56,16 +52,6 @@ const RecordProyectos = ({ dato }) => {
             >
                 <ObjetivosEspecificos
                     specificObjectives={specificObjectives}
-                />
-            </VentanaModal>
-            <VentanaModal
-                titulo="Editar proyecto"
-                setShow={setShowEditar}
-                show={showEditar}
-            >
-                <ActualizarProyecto
-                    setShowEditar={setShowEditar}
-                    proyectoEditar={proyectoEditar}
                 />
             </VentanaModal>
       </>

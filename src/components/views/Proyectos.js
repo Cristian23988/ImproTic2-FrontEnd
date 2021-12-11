@@ -3,9 +3,15 @@ import ContenidoMenu from "../ContenidoMenu";
 import { Table } from "react-bootstrap";
 import RecordProyectos from "../Tables/RecordProyectos";
 import React, { useState, useEffect } from "react";
+import VentanaModal from '../VentanaModal';
+import ActualizarProyecto from '../Formularios/ActualizarProyecto';
 
 const Proyectos = () => {
   const [datos, setdatos] = useState([]);
+  //hook para pasar la info del proyecto al modal de editar
+  const [proyectoEditar, setProyectoEditar]= useState({});
+  const [showEditar, setShowEditar]= useState(false);
+
   useEffect(() => {
     const consultaUrl = async () => {
       try {
@@ -43,12 +49,27 @@ const Proyectos = () => {
             </thead>
             <tbody>
               {datos.map((dato) => (
-                <RecordProyectos key={dato.id} dato={dato} />
+                <RecordProyectos 
+                  key={dato.id} 
+                  dato={dato} 
+                  setProyectoEditar={setProyectoEditar}
+                  setShowEditar={setShowEditar}
+                />
               ))}
             </tbody>
           </Table>
         </div>
       </ContenidoMenu>
+      <VentanaModal
+        titulo="Editar proyecto"
+        setShow={setShowEditar}
+        show={showEditar}
+      >
+        <ActualizarProyecto
+          setShowEditar={setShowEditar}
+          proyectoEditar={proyectoEditar}
+        />
+      </VentanaModal>
     </>
   );
 };
