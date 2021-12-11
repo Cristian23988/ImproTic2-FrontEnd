@@ -37,6 +37,7 @@ const Proyectos = () => {
                 <th>Fecha fin</th>
                 <th>Lider</th>
                 <th>Estado</th>
+                <th>Fase</th>
                 <th>Acciones</th>
               </tr>
             </thead>
