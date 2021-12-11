@@ -1,6 +1,6 @@
 import { Card, Button } from "react-bootstrap";
 import { useState } from "react";
-const RecordUsuario = ({ dato, setShow, setShowEliminar }) => {
+const RecordUsuario = ({ dato, setShow }) => {
   const { email, name, lastName, fullName, role, status, password, id } = dato;
 
   return (
@@ -16,9 +16,6 @@ const RecordUsuario = ({ dato, setShow, setShowEliminar }) => {
       <td>
         <button className="btn btn-primary me-3" onClick={setShow}>
           Editar
-        </button>
-        <button className="btn btn-danger" onClick={setShowEliminar}>
-          Eliminar
         </button>
       </td>
     </tr>
