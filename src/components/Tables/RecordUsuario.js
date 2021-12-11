@@ -1,7 +1,8 @@
 import { Card, Button } from "react-bootstrap";
-import ModalEliminar from "./ModalEliminar";
-import ModalActualizar from "./ModalActualizar";
-const RecordUsuario = ({ dato }) => {
+import {useState} from "react";
+
+const RecordUsuario = ({ dato, setShow, setShowEliminar }) => {
+
   const { email, name, lastName, fullName, role, status, password, id } = dato;
   return (
     <Card>
@@ -34,10 +35,14 @@ const RecordUsuario = ({ dato }) => {
         </div>
         <div className="row align-items-start p-2">
           <div className="col">
-            <ModalActualizar />
+            <button className="btn btn-primary" onClick={setShow}>
+              Editar
+            </button>
           </div>
           <div className="col">
-            <ModalEliminar />
+              <button className="btn btn-primary" onClick={setShowEliminar}>
+                Eliminar
+              </button>
           </div>
         </div>
       </Card.Body>
