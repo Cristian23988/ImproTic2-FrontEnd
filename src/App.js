@@ -2,7 +2,8 @@ import Login from "./components/Login";
 import Home from "./components/views/Home";
 import Usuarios from "./components/views/Usuarios";
 import Proyectos from "./components/views/Proyectos";
-import Estudiantes from "./components/views/Estudiantes";
+import Avances from "./components/views/Avances";
+import Inscripciones from "./components/views/Inscripciones";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import RegistroUsuarios from "./components/RegistroUsuarios";
 
@@ -20,7 +21,9 @@ function App() {
             <Route index path="menu/home" element={<Home />} />
             <Route exact path="menu/usuarios" element={<Usuarios />} />
             <Route exact path="menu/proyectos" element={<Proyectos />} />
-            <Route exact path="menu/estudiantes" element={<Estudiantes />} />
+            <Route exact path="menu/avances" element={<Avances />} />
+            <Route exact path="menu/inscripciones" element={<Inscripciones/>} />
+            
           </Route>
         </Routes>
       </BrowserRouter>
