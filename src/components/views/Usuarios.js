@@ -3,7 +3,6 @@ import ContenidoMenu from "../ContenidoMenu";
 import VentanaModal from "../VentanaModal";
 import RecordUsuario from "../Tables/RecordUsuario";
 import { useEffect, useState } from "react";
-import EliminarUsuario from "../Formularios/EliminarUsuario";
 import ActualizarStatus from "../Formularios/ActualizarStatus";
 import { Table } from "react-bootstrap";
 const Usuarios = () => {
@@ -11,8 +10,7 @@ const Usuarios = () => {
 
   //estado para el modal de actualizar
   const [show, setShow] = useState(false);
-  //estado para el modal de eliminar
-  const [showEliminar, setShowEliminar] = useState(false);
+
   useEffect(() => {
     const consultaUrl = async () => {
       try {
@@ -52,7 +50,6 @@ const Usuarios = () => {
                   key={dato.id}
                   dato={dato}
                   setShow={setShow}
-                  setShowEliminar={setShowEliminar}
                 />
               ))}
             </tbody>
@@ -65,14 +62,6 @@ const Usuarios = () => {
         show={show}
       >
         <ActualizarStatus setShow={setShow} />
-      </VentanaModal>
-
-      <VentanaModal
-        titulo="Advertencia"
-        setShow={setShowEliminar}
-        show={showEliminar}
-      >
-        <EliminarUsuario setShow={setShowEliminar} />
       </VentanaModal>
     </>
   );
