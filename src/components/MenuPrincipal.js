@@ -69,7 +69,7 @@ const MenuPrincipal = () => {
     <>
       <BarraPerfil setShow={setShow} />
       <VentanaModal
-        titulo="Actualizar Estado Usuario"
+        titulo="Actualizar perfil Usuario"
         setShow={setShow}
         show={show}
       >

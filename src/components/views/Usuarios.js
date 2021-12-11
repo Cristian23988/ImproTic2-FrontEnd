@@ -5,6 +5,8 @@ import RecordUsuario from "../Tables/RecordUsuario";
 import { useEffect, useState } from "react";
 import EliminarUsuario from "../Formularios/EliminarUsuario";
 import ActualizarStatus from "../Formularios/ActualizarStatus";
+
+import { Table } from "react-bootstrap";
 import { Table } from "react-bootstrap";
 
 const Usuarios = () => {

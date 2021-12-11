@@ -1,8 +1,8 @@
 import { Card, Button } from "react-bootstrap";
 import { useState } from "react";
-
 const RecordUsuario = ({ dato, setShow, setShowEliminar }) => {
   const { email, name, lastName, fullName, role, status, password, id } = dato;
+
   return (
     <tr>
       <td>{id}</td>
