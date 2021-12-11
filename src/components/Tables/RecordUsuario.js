@@ -1,5 +1,6 @@
+import { Card, Button } from "react-bootstrap";
+import { useState } from "react";
 const RecordUsuario = ({ dato, setShow, setShowEliminar }) => {
-
   const { email, name, lastName, fullName, role, status, password, id } = dato;
 
   return (
@@ -8,9 +9,7 @@ const RecordUsuario = ({ dato, setShow, setShowEliminar }) => {
       <td>{email}</td>
       <td>{name}</td>
       <td>{lastName}</td>
-      <td className="overflow-scroll">
-        {fullName}
-      </td>
+      <td className="overflow-scroll">{fullName}</td>
       <td>{role}</td>
       <td>{status}</td>
       <td>{password}</td>

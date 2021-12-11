@@ -5,8 +5,7 @@ import RecordUsuario from "../Tables/RecordUsuario";
 import { useEffect, useState } from "react";
 import EliminarUsuario from "../Formularios/EliminarUsuario";
 import ActualizarStatus from "../Formularios/ActualizarStatus";
-import {Table} from 'react-bootstrap';
-
+import { Table } from "react-bootstrap";
 const Usuarios = () => {
   const [datos, setdatos] = useState([]);
 
@@ -35,17 +34,17 @@ const Usuarios = () => {
         <div className="d-flex justify-content-start flex-row gap-5 flex-wrap w-100 p-5 overflow-scroll shadow">
           <Table striped bordered hover size="sm">
             <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Correo</th>
-                  <th>Nombre</th>
-                  <th>Apellidos</th>
-                  <th>Nombre Completo</th>
-                  <th>Rol</th>
-                  <th>Estado</th>
-                  <th>Contraseña</th>
-                  <th>Acciones</th>
-                </tr>
+              <tr>
+                <th>#</th>
+                <th>Correo</th>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+                <th>Nombre Completo</th>
+                <th>Rol</th>
+                <th>Estado</th>
+                <th>Contraseña</th>
+                <th>Acciones</th>
+              </tr>
             </thead>
             <tbody>
               {datos.map((dato) => (
@@ -57,7 +56,7 @@ const Usuarios = () => {
                 />
               ))}
             </tbody>
-          </Table>         
+          </Table>
         </div>
       </ContenidoMenu>
       <VentanaModal
