@@ -4,8 +4,12 @@ import Footer from "../Footer";
 import { Table } from "react-bootstrap";
 import RecordAvance from "../Tables/RecordAvance";
 import React, { useState, useEffect } from "react";
+import ActualizarDescription from "../Formularios/ActualizarDescription";
+import VentanaModal from "../VentanaModal";
 const Avances = () => {
   const [datos, setdatos] = useState([]);
+
+  const [show, setShow] = useState(false);
   useEffect(() => {
     const consultaUrl = async () => {
       try {
@@ -44,9 +48,13 @@ const Avances = () => {
           </Table>
         </div>
       </ContenidoMenu>
-      <div className="position-absolute bottom-0 w-100 h-auto">
-        <Footer />
-      </div>
+      <VentanaModal
+        titulo="Actualizar Descripcion"
+        setShow={setShow}
+        show={show}
+      >
+        <ActualizarDescription setShow={setShow} />
+      </VentanaModal>
     </>
   );
 };

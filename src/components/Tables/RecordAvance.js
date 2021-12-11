@@ -1,5 +1,5 @@
 import Button from "react-bootstrap/Button";
-const RecorAvance = ({ dato }) => {
+const RecorAvance = ({ dato, setShow }) => {
   const { project_id, addDate, description, observations, id } = dato;
   return (
     <tr>
@@ -9,8 +9,9 @@ const RecorAvance = ({ dato }) => {
       <td className="overflow-scroll">{description}</td>
       <td>{observations}</td>
       <td>
-        <Button variant="primary">A</Button>
-        <Button variant="secondary">D</Button>
+        <button className="btn btn-primary " onClick={setShow}>
+          E
+        </button>
       </td>
     </tr>
   );

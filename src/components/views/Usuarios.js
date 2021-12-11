@@ -3,9 +3,9 @@ import ContenidoMenu from "../ContenidoMenu";
 import VentanaModal from "../VentanaModal";
 import RecordUsuario from "../Tables/RecordUsuario";
 import { useEffect, useState } from "react";
-import ActualizarUsuario from "../Formularios/ActualizarUsuario";
 import EliminarUsuario from "../Formularios/EliminarUsuario";
 import ActualizarStatus from "../Formularios/ActualizarStatus";
+import { Table } from "react-bootstrap";
 
 const Usuarios = () => {
   const [datos, setdatos] = useState([]);
@@ -33,14 +33,31 @@ const Usuarios = () => {
       <ContenidoMenu>
         <h1 className="fst-italic">Gestionar usuarios del sistema</h1>
         <div className="d-flex justify-content-start flex-row gap-5 flex-wrap w-100 p-5 overflow-scroll shadow">
-          {datos.map((dato) => (
-            <RecordUsuario
-              key={dato.id}
-              dato={dato}
-              setShow={setShow}
-              setShowEliminar={setShowEliminar}
-            />
-          ))}
+          <Table striped bordered hover size="sm">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Correo</th>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+                <th>Nombre Completo</th>
+                <th>Rol</th>
+                <th>Estado</th>
+                <th>Contraseña</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              {datos.map((dato) => (
+                <RecordUsuario
+                  key={dato.id}
+                  dato={dato}
+                  setShow={setShow}
+                  setShowEliminar={setShowEliminar}
+                />
+              ))}
+            </tbody>
+          </Table>
         </div>
       </ContenidoMenu>
       <VentanaModal
