@@ -1,6 +1,5 @@
 import Menu from "../MenuPrincipal";
 import ContenidoMenu from "../ContenidoMenu";
-import Footer from "../Footer";
 import { Table } from "react-bootstrap";
 import RecordProyectos from "../Tables/RecordProyectos";
 
@@ -23,6 +22,7 @@ const Proyectos = () => {
                 <th>Fecha fin</th>
                 <th>Lider</th>
                 <th>Estado</th>
+                <th>Acciones</th>
               </tr>
             </thead>
             <tbody>
@@ -33,9 +33,6 @@ const Proyectos = () => {
           </Table>
         </div>        
       </ContenidoMenu>
-      <div className="position-absolute bottom-0 w-100 h-auto">
-        <Footer />
-      </div>
     </>
   );
 };
