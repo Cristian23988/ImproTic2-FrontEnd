@@ -11,8 +11,8 @@ const Usuarios = () => {
   console.log(datos);
   //estado para el modal de actualizar
   const [show, setShow] = useState(false);
-   //estado para el modal de eliminar
-   const [showEliminar, setShowEliminar] = useState(false);
+  //estado para el modal de eliminar
+  const [showEliminar, setShowEliminar] = useState(false);
 
   useEffect(() => {
     const consultaUrl = async () => {

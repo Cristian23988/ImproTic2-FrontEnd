@@ -3,8 +3,9 @@ import { Nav } from "react-bootstrap";
 import IconMenu from "../images/Icons/IconMenu";
 import IconHome from "../images/Icons/IconHome";
 import IconUsuarios from "../images/Icons/IconUsuarios";
-import IconEstudiantes from "../images/Icons/IconEstudiantes";
+import IconAvance from "../images/Icons/IconAvance";
 import IconProyectos from "../images/Icons/IconProyectos";
+import IconInscripcion from "../images/Icons/IconInscripcion";
 import BarraPerfil from "./BarraPerfil";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -22,7 +23,8 @@ const MenuPrincipal = () => {
   const [linkHome, setLinkHome] = useState("");
   const [linkUsuarios, setLinkUsuarios] = useState("");
   const [linkProyectos, setLinkProyectos] = useState("");
-  const [linkEstudiantes, setLinkEstudiantes] = useState("");
+  const [linkAvances, setLinkAvances] = useState("");
+  const [linkInscripciones, setLinkInscripciones] = useState("");
 
   var URLactual = window.location.href;
 
@@ -30,23 +32,33 @@ const MenuPrincipal = () => {
     if (URLactual === "http://localhost:3000/menu/usuarios") {
       setLinkUsuarios("active");
       setLinkProyectos("");
-      setLinkEstudiantes("");
+      setLinkAvances("");
       setLinkHome("");
+      setLinkInscripciones("");
     } else if (URLactual === "http://localhost:3000/menu/proyectos") {
       setLinkUsuarios("");
       setLinkProyectos("active");
-      setLinkEstudiantes("");
+      setLinkAvances("");
       setLinkHome("");
-    } else if (URLactual === "http://localhost:3000/menu/estudiantes") {
+      setLinkInscripciones("");
+    } else if (URLactual === "http://localhost:3000/menu/avances") {
       setLinkUsuarios("");
       setLinkProyectos("");
-      setLinkEstudiantes("active");
+      setLinkAvances("active");
       setLinkHome("");
+      setLinkInscripciones("");
+    }else if (URLactual === "http://localhost:3000/menu/inscripciones") {
+      setLinkUsuarios("");
+      setLinkProyectos("");
+      setLinkAvances("");
+      setLinkHome("");
+      setLinkInscripciones("active");
     } else {
       setLinkUsuarios("");
       setLinkProyectos("");
-      setLinkEstudiantes("");
+      setLinkAvances("");
       setLinkHome("active");
+      setLinkInscripciones("");
     }
   }, []);
 
@@ -72,7 +84,8 @@ const MenuPrincipal = () => {
             setLinkHome("active");
             setLinkUsuarios("");
             setLinkProyectos("");
-            setLinkEstudiantes("");
+            setLinkAvances("");
+            setLinkInscripciones("");
           }}
         >
           <IconHome /> Home
@@ -84,7 +97,8 @@ const MenuPrincipal = () => {
             setLinkUsuarios("active");
             setLinkHome("");
             setLinkProyectos("");
-            setLinkEstudiantes("");
+            setLinkAvances("");
+            setLinkInscripciones("");
           }}
         >
           <IconUsuarios /> Usuarios
@@ -96,22 +110,36 @@ const MenuPrincipal = () => {
             setLinkUsuarios("");
             setLinkHome("");
             setLinkProyectos("active");
-            setLinkEstudiantes("");
+            setLinkAvances("");
+            setLinkInscripciones("");
           }}
         >
           <IconProyectos /> Proyectos
         </Link>
         <Link
-          to="/menu/estudiantes"
-          className={`${linkEstudiantes} nav-link text-white text-center`}
+          to="/menu/avances"
+          className={`${linkAvances} nav-link text-white text-center`}
           onClick={() => {
             setLinkUsuarios("");
             setLinkHome("");
             setLinkProyectos("");
-            setLinkEstudiantes("active");
+            setLinkAvances("active");
           }}
         >
-          <IconEstudiantes /> Estudiantes
+          <IconAvance /> Avances
+        </Link>
+        <Link
+          to="/menu/inscripciones"
+          className={`${linkInscripciones} nav-link text-white text-center`}
+          onClick={() => {
+            setLinkUsuarios("");
+            setLinkHome("");
+            setLinkProyectos("");
+            setLinkAvances("");
+            setLinkInscripciones("active");
+          }}
+        >
+          <IconInscripcion /> Inscripciones
         </Link>
         {/* <Nav.Link eventKey="disabled"  disabled>
                     Disabled
