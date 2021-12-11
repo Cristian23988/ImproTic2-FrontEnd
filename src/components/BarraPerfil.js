@@ -3,7 +3,7 @@ import IconPersona from "../images/Icons/IconPersona";
 import IconConfig from "../images/Icons/IconConfig";
 import IconLogOut from "../images/Icons/IconLogOut";
 
-const BarraPerfil = () => {
+const BarraPerfil = ({ setShow }) => {
   const dimensionBarra = {
     width: "85%",
     height: "8%",
@@ -32,9 +32,9 @@ const BarraPerfil = () => {
           <span className="fw-bold text-dark mx-5">
             Administrador: Diego Alejandro Diaz Bonilla
           </span>
-          <Boton variante="secondary" tipo="button" clase="shadow w-auto">
-            <IconConfig />
-          </Boton>
+          <button className="btn btn-secondary" onClick={setShow}>
+            <IconConfig /> Editar
+          </button>
         </div>
         <div style={elemento}></div>
         <div className="w-25 d-flex justify-content-end me-5">

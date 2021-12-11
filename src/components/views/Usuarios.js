@@ -9,7 +9,7 @@ import ActualizarStatus from "../Formularios/ActualizarStatus";
 
 const Usuarios = () => {
   const [datos, setdatos] = useState([]);
-  console.log(datos);
+
   //estado para el modal de actualizar
   const [show, setShow] = useState(false);
   //estado para el modal de eliminar
@@ -50,6 +50,7 @@ const Usuarios = () => {
       >
         <ActualizarStatus setShow={setShow} />
       </VentanaModal>
+
       <VentanaModal
         titulo="Advertencia"
         setShow={setShowEliminar}
