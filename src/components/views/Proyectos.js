@@ -1,6 +1,6 @@
 import Menu from "../MenuPrincipal";
 import ContenidoMenu from "../ContenidoMenu";
-import { Table } from "react-bootstrap";
+import { Table, Button } from "react-bootstrap";
 import RecordProyectos from "../Tables/RecordProyectos";
 import React, { useState, useEffect } from "react";
 import VentanaModal from '../VentanaModal';
@@ -10,6 +10,7 @@ const Proyectos = () => {
   const [datos, setdatos] = useState([]);
   //hook para pasar la info del proyecto al modal de editar
   const [proyectoEditar, setProyectoEditar]= useState({});
+
   const [showEditar, setShowEditar]= useState(false);
 
   useEffect(() => {
@@ -24,12 +25,19 @@ const Proyectos = () => {
       }
     };
     consultaUrl();
-  }, []);
+  }, [datos]);
+
   return (
     <>
       <Menu />
       <ContenidoMenu>
         <h1 className="fst-italic">Gestionar proyectos </h1>
+        <div className="w-100 d-flex justify-content-start p-5 mb-1 mt-2">
+          <Button variant="primary">
+            Nuevo proyecto
+          </Button>
+        </div>
+        
         <div className="d-flex justify-content-start flex-row gap-5 flex-wrap w-100 p-5 overflow-scroll shadow">
           <Table striped bordered hover size="sm">
             <thead>

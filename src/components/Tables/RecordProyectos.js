@@ -18,14 +18,35 @@ const RecordProyectos = ({ dato, setProyectoEditar, setShowEditar }) => {
         phase,
         id,
     } = dato;
-
+    //funcion para añadir ; al final de cada objetivo especifico 
+    const separarStringCaracter=(objetivos)=>{
+        let cadena=objetivos.toString();
+        let cadenaNueva='';
+        //evaluamos si la cadena tiene comas
+        for (let i=0; i < cadena.length; i++){
+            let caracter=cadena.charAt(i);
+            if(caracter===','){
+              caracter=';'
+            }
+            cadenaNueva+=caracter;
+        }
+        setProyectoEditar((dato)=>{
+            const nuevoDato={...dato};
+            nuevoDato.specificObjectives=cadenaNueva;
+            return nuevoDato;
+        })
+        console.log(typeof(cadenaNueva))
+        return cadenaNueva
+    }
     //funcion para pasar info al modal de editar
     const editarProyecto=id=>{
         if(id===dato.id){
             setProyectoEditar(dato)
+            separarStringCaracter(specificObjectives)
         }   
         setShowEditar(true)
     }
+    
   return (
       <>
             <tr>
