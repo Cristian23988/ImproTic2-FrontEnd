@@ -1,14 +1,18 @@
 import { Button } from "react-bootstrap";
-import Form from "react-bootstrap/Form";
+import Formm from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
+import { Formik, Form, Field } from "formik";
+import * as Yup from "yup";
+import React, { useState, useEffect } from "react";
+
 const ActualizarDescription = ({ setShow }) => {
   const handleClose = () => setShow(false);
   return (
     <>
-      <Form.Group>
-        <Form.Label>Descripcion</Form.Label>
-        <Form.Control as="textarea" placeholder="Descripcion" />
-      </Form.Group>
+      <Formm.Group>
+        <Formm.Label>Descripcion</Formm.Label>
+        <Formm.Control as="textarea" placeholder="Descripcion" />
+      </Formm.Group>
       <Modal.Footer>
         <Button variant="danger">Eliminar</Button>
         <Button variant="secondary" onClick={handleClose}>

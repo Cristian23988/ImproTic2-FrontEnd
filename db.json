@@ -61,6 +61,17 @@
       "status": "pending",
       "password": "123s4151",
       "id": 6
+    },
+    {
+      "email": "diegofelipem99@gmail.com",
+      "documentId": "112",
+      "name": "Diego Muñoz",
+      "lastName": "Muñoz Mosquera",
+      "fullName": "Diego Felipe",
+      "role": "usuario",
+      "status": "pending",
+      "password": "ddsdasdas",
+      "id": 7
     }
   ],
   "avances": [
@@ -133,7 +144,7 @@
       "user_id": "Diego Alejndro  ",
       "enrollmentDate": "2030/12/2",
       "status": "acepted",
-      "id":2
+      "id": 2
     }
   ]
 }

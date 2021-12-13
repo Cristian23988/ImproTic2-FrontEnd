@@ -6,7 +6,7 @@ import RecordAvance from "../Tables/RecordAvance";
 import React, { useState, useEffect } from "react";
 const Avances = () => {
   const [datos, setdatos] = useState([]);
-
+  const [modal, setShow] = useState(false);
   useEffect(() => {
     const consultaUrl = async () => {
       try {
