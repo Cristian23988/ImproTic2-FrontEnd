@@ -1,4 +1,6 @@
 import { Button } from "react-bootstrap";
+
+import Modal from "react-bootstrap/Modal";
 import Formm from "react-bootstrap/Form";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
@@ -139,10 +141,12 @@ const ActualizarUsuario = ({ setShow }) => {
                   <Error>{errors.password}</Error>
                 ) : null}
               </Formm.Group>
-              <Button variant="primary">Actualizar</Button>
-              <Button variant="secondary" onClick={handleClose}>
-                Cerrar
-              </Button>
+              <Modal.Footer>
+                <Button variant="primary">Actualizar</Button>
+                <Button variant="secondary" onClick={handleClose}>
+                  Cerrar
+                </Button>
+              </Modal.Footer>
             </Form>
           );
         }}
