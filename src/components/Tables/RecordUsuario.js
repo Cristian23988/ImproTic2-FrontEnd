@@ -15,7 +15,7 @@ const RecordUsuario = ({ dato, setShow, setEstadoEditar}) => {
         <td>{email}</td>
         <td>{name}</td>
         <td>{lastName}</td>
-        <td className="overflow-scroll">{fullName}</td>
+        <td>{fullName}</td>
         <td>{role}</td>
         <td>{status}</td>
         <td>{password}</td>

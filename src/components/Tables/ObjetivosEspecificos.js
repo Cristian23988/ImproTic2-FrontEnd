@@ -1,6 +1,9 @@
 import { Table } from "react-bootstrap";
 
 const ObjetivosEspecificos=({specificObjectives})=>{
+    if(typeof(specificObjectives)==='string'){
+        specificObjectives=specificObjectives.split(';');
+    }
     return(
         <Table  striped bordered hover size="sm">
              <thead>
@@ -9,8 +12,8 @@ const ObjetivosEspecificos=({specificObjectives})=>{
               </tr>
             </thead>
             <tbody>
-                {specificObjectives.map(specificObjetive=>(
-                    <tr>
+                {specificObjectives.map((specificObjetive, index)=>(
+                    <tr key={index}>
                         <td>{specificObjetive}</td>
                     </tr>
                 ))}
