@@ -47,7 +47,7 @@
       "lastName": "Felipe",
       "fullName": "Diego Alejito",
       "role": "administrador",
-      "status": "active",
+      "status": "pending",
       "password": "ASDQWASSA",
       "id": 5
     },
@@ -170,7 +170,7 @@
       "user_id": "Diego Alejndro  ",
       "enrollmentDate": "2030/12/2",
       "status": "acepted",
-      "id":1
+      "id":2
     }
   ]
 }
