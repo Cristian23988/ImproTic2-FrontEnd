@@ -5,6 +5,7 @@ import RecordProyectos from "../Tables/RecordProyectos";
 import React, { useState, useEffect } from "react";
 import VentanaModal from '../VentanaModal';
 import ActualizarProyecto from '../Formularios/ActualizarProyecto';
+import NuevoProyecto from '../Formularios/NuevoProyecto';
 
 const Proyectos = () => {
   const [datos, setdatos] = useState([]);
@@ -12,6 +13,7 @@ const Proyectos = () => {
   const [proyectoEditar, setProyectoEditar]= useState({});
 
   const [showEditar, setShowEditar]= useState(false);
+  const [showNuevo, setShowNuevo]= useState(false);
 
   useEffect(() => {
     const consultaUrl = async () => {
@@ -33,7 +35,7 @@ const Proyectos = () => {
       <ContenidoMenu>
         <h1 className="fst-italic">Gestionar proyectos </h1>
         <div className="w-100 d-flex justify-content-start p-5 mb-1 mt-2">
-          <Button variant="primary">
+          <Button variant="primary" onClick={()=>setShowNuevo(true)}>
             Nuevo proyecto
           </Button>
         </div>
@@ -76,6 +78,15 @@ const Proyectos = () => {
         <ActualizarProyecto
           setShowEditar={setShowEditar}
           proyectoEditar={proyectoEditar}
+        />
+      </VentanaModal>
+      <VentanaModal
+        titulo="Crear proyecto"
+        setShow={setShowNuevo}
+        show={showNuevo}
+      >
+        <NuevoProyecto
+          setShowEditar={setShowNuevo}
         />
       </VentanaModal>
     </>
