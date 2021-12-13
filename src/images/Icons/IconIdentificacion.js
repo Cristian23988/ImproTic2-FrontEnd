@@ -4,7 +4,7 @@ const IconIdentificacion = () => (
     width="16"
     height="16"
     fill="currentColor"
-    class="bi bi-file-binary-fill"
+    className="bi bi-file-binary-fill"
     viewBox="0 0 16 16"
   >
     <path d="M5.526 9.273c-.542 0-.832.563-.832 1.612 0 .088.003.173.006.252l1.56-1.143c-.126-.474-.375-.72-.733-.72zm-.732 2.508c.126.472.372.718.732.718.54 0 .83-.563.83-1.614 0-.085-.003-.17-.006-.25l-1.556 1.146z" />

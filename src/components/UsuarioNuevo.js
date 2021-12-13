@@ -13,6 +13,7 @@ import { useState } from "react";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import IconRegistrer from "../images/Icons/IconRegistrer";
+import Alertify from "alertify.js";
 const UsuarioNuevo = () => {
   //Prueba para una api con los datos
   const handleSubmit = async (values) => {
@@ -25,7 +26,7 @@ const UsuarioNuevo = () => {
       },
     });
     const res = await resultado.json();
-    console.log(resultado);
+    Alertify.success("Usuario Registrado Con Exito!");
   };
 
   //Funcion para validar el formulario
@@ -78,7 +79,7 @@ const UsuarioNuevo = () => {
                   name="email"
                   placeholder="Ingresa tu email"
                 />
-                {errors.email && touched.email ? (
+                {errors.email && touched.email && "is-invalid" ? (
                   <Error>{errors.email}</Error>
                 ) : null}
               </Formm.Group>
