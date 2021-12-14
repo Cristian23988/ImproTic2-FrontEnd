@@ -7,60 +7,73 @@ import IconClave from "../images/Icons/IconClave";
 import IconNombre from "../images/Icons/IconNombre";
 import IconIdentificacion from "../images/Icons/IconIdentificacion";
 import Boton from "./Buttons";
+import { useMutation, useQuery, gql } from '@apollo/client';
 
 import Error from "./Error";
-import { useState } from "react";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import IconRegistrer from "../images/Icons/IconRegistrer";
 import Alertify from "alertify.js";
-const UsuarioNuevo = () => {
-  //Prueba para una api con los datos
-  const handleSubmit = async (values) => {
-    const url = "http://localhost:4000/usuarios";
-    const resultado = await fetch(url, {
-      method: "POST",
-      body: JSON.stringify(values),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const res = await resultado.json();
-    Alertify.success("Usuario Registrado Con Exito!");
-  };
 
-  //Funcion para validar el formulario
-  const RegistroUsuario = Yup.object().shape({
-    email: Yup.string()
-      .email("Email no valido")
-      .required("El email es obligatorio!"),
-    documentId: Yup.number().required("La identificacion es obligatoria"),
-    name: Yup.string().required("El nombre es obligatorio"),
-    lastName: Yup.string().required("El apellido es obligatorio"),
-    fullName: Yup.string()
-      .required("El nombre completo es obligatorio")
-      .min(10, "Ingrasa tu nombre completo"),
-    role: Yup.string().required("El rol es obligatorio"),
-    password: Yup.string().required("La clave es obligatoria"),
-  });
-  //const valores iniciales
-  const initialValues = {
-    email: "",
-    documentId: "",
-    name: "",
-    lastName: "",
-    fullName: "",
-    role: "",
-    status: "pending",
-    password: "",
-  };
+
+const REGISTERUSER = gql`
+  mutation RegisterUser($input: RegisterInputUs!) {
+    registerUser(input: $input) {
+      _id
+    }
+  }
+`;
+
+const ROLES = gql `
+  query Query {
+    roles {
+      code
+      value
+    }
+  }
+`;
+ //const valores iniciales
+ const initialValues = {
+  email: "",
+  documentId:"",
+  name: "",
+  lastName: "",
+  role: "",
+  password: "",
+};
+//Funcion para validar el formulario
+const RegistroUsuario = Yup.object().shape({
+  email: Yup.string()
+    .email("Email no valido")
+    .required("El email es obligatorio!"),
+  documentId: Yup.number().required("La identificacion es obligatoria"),
+  name: Yup.string().required("El nombre es obligatorio"),
+  lastName: Yup.string().required("El apellido es obligatorio"),
+  role: Yup.string().required("El rol es obligatorio"),
+  password: Yup.string().required("La clave es obligatoria"),
+});
+const UsuarioNuevo = () => {
+
+  const [registerUser] = useMutation(REGISTERUSER);
+  const { data, loading: loadingRoles } = useQuery(ROLES);
+
   return (
     <>
       <Formik
         initialValues={initialValues}
-        onSubmit={async (values, { resetForm }) => {
-          await handleSubmit(values);
-          resetForm();
+        onSubmit={(values, { resetForm }) => {
+          registerUser({
+            variables:{
+              input:{
+                ...values
+              }
+            }
+          }).then(() => {
+            Alertify.success("Usuario Registrado Con Exito!");
+            resetForm();
+          }).catch(() => {
+            Alertify.error("Hubo un error!");
+          })
         }}
         validationSchema={RegistroUsuario} //validando el form
       >
@@ -92,7 +105,7 @@ const UsuarioNuevo = () => {
                   className={`form-control ${
                     errors.documentId && touched.documentId && "is-invalid"
                   } `}
-                  type="text"
+                  type="number"
                   name="documentId"
                   placeholder="Ingresa tu identificacion"
                 />
@@ -136,23 +149,6 @@ const UsuarioNuevo = () => {
               </Formm.Group>
               <Formm.Group className="m-2">
                 <Formm.Label className="fw-bold">
-                  <IconUsuarios /> Nombre Completo
-                </Formm.Label>
-                <Field
-                  className={`form-control ${
-                    errors.fullName && touched.fullName && "is-invalid"
-                  } `}
-                  type="text"
-                  name="fullName"
-                  placeholder="Ingresa tu nombre completo"
-                />
-                {errors.fullName && touched.fullName ? (
-                  <Error>{errors.fullName}</Error>
-                ) : null}
-              </Formm.Group>
-
-              <Formm.Group className="m-2">
-                <Formm.Label className="fw-bold">
                   <IconRol /> Rol
                 </Formm.Label>
                 <Field
@@ -163,11 +159,7 @@ const UsuarioNuevo = () => {
                   } `}
                 >
                   <option value="">--Selecciona un rol--</option>
-
-                  <option value="usuario">Usuario</option>
-                  <option value="administrador">Administrador</option>
-                  <option value="estudiante">Estudiante</option>
-                  <option value="lider">Lider</option>
+                  {!loadingRoles && data.roles.map(({ code, value}, index) => <option key={index} value={code}>{value}</option>)}
                 </Field>
                 {errors.role && touched.role ? (
                   <Error>{errors.role}</Error>
