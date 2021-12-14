@@ -4,8 +4,8 @@ import RecordUsuario from "../Tables/RecordUsuario";
 import { useEffect, useState } from "react";
 import ActualizarStatus from "../Formularios/ActualizarStatus";
 import VentanaModal from "../VentanaModal";
-
 import { Table } from "react-bootstrap";
+
 const Usuarios = () => {
   const [datos, setdatos] = useState([]);
   //estado para el modal de actualizar
@@ -25,6 +25,7 @@ const Usuarios = () => {
     };
     consultaUrl();
   }, []);
+  
   return (
     <>
       <Menu />

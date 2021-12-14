@@ -3,7 +3,7 @@ import ObjetivosEspecificos from "./ObjetivosEspecificos";
 import VentanaModal from "../VentanaModal";
 import { useState } from "react";
 
-const RecordProyectos = ({ dato, setProyectoEditar, setShowEditar }) => {
+const RecordProyectos = ({ dato, setProyectoEditar, setShowEditar , contador}) => {
   const [showObjetivos, setShowObjetives] = useState(false);
 
   const {
@@ -13,11 +13,21 @@ const RecordProyectos = ({ dato, setProyectoEditar, setShowEditar }) => {
     budget,
     startDate,
     endDate,
-    leader_id,
     status,
     phase,
-    id,
+    leader,
+    _id,
   } = dato;
+  
+  const formatearFecha=fecha=>{
+    const fechaNueva=new Date(fecha);
+    const opciones={
+        year:'numeric',
+        month:'long',
+        day:'2-digit'
+    }
+    return fechaNueva.toLocaleString('es-ES', opciones);
+  } 
   //funcion para añadir ; al final de cada objetivo especifico
   const separarStringCaracter = (objetivos) => {
     let cadena = objetivos.toString();
@@ -35,22 +45,21 @@ const RecordProyectos = ({ dato, setProyectoEditar, setShowEditar }) => {
       nuevoDato.specificObjectives = cadenaNueva;
       return nuevoDato;
     });
-    console.log(typeof cadenaNueva);
     return cadenaNueva;
   };
   //funcion para pasar info al modal de editar
   const editarProyecto = (id) => {
-    if (id === dato.id) {
+    if (id === dato._id) {
       setProyectoEditar(dato);
       separarStringCaracter(specificObjectives);
     }
     setShowEditar(true);
   };
-
+  
   return (
     <>
       <tr>
-        <td>{id}</td>
+        <td>{contador}</td>
         <td>{name}</td>
         <td>{generalObjective}</td>
         <td>
@@ -59,13 +68,13 @@ const RecordProyectos = ({ dato, setProyectoEditar, setShowEditar }) => {
           </Button>
         </td>
         <td>{budget}</td>
-        <td>{startDate}</td>
-        <td>{endDate}</td>
-        <td>{leader_id}</td>
+        <td>{formatearFecha(startDate)}</td>
+        <td>{formatearFecha(endDate)}</td>
+        <td>{leader.name}</td>
         <td>{status}</td>
         <td>{phase}</td>
         <td>
-          <Button variant="warning" onClick={() => editarProyecto(id)}>
+          <Button variant="warning" onClick={() => editarProyecto(_id)}>
             Editar
           </Button>
         </td>
