@@ -6,9 +6,38 @@ import React, { useState, useEffect } from "react";
 import VentanaModal from '../VentanaModal';
 import ActualizarProyecto from '../Formularios/ActualizarProyecto';
 import NuevoProyecto from '../Formularios/NuevoProyecto';
+import { useQuery, gql } from '@apollo/client';
+import alertify from "alertify.js";
 
+const userByEmail = gql `
+  query UserByEmail($email: String!) {
+    userByEmail(email: $email) {
+      role
+    }
+    allProjects {
+      _id
+      name
+      generalObjective
+      specificObjectives
+      budget
+      startDate
+      endDate
+      leader_id
+      status
+      phase
+      leader {
+        name
+      }
+    }
+  }
+`;
 const Proyectos = () => {
-  const [datos, setdatos] = useState([]);
+  let correo=sessionStorage.getItem('email');
+  // const {data, load} = useQuery();
+
+  const {data, error, loading} = useQuery(userByEmail, {
+    variables: { email: correo },
+  });
   //hook para pasar la info del proyecto al modal de editar
   const [proyectoEditar, setProyectoEditar]= useState({});
 
@@ -16,28 +45,24 @@ const Proyectos = () => {
   const [showNuevo, setShowNuevo]= useState(false);
 
   useEffect(() => {
-    const consultaUrl = async () => {
-      try {
-        const url = `http://localhost:4000/projectos`;
-        const respuesta = await fetch(url);
-        const resultado = await respuesta.json();
-        setdatos(resultado);
-      } catch (error) {
-        console.log("ocurrio un erro " + error);
-      }
-    };
-    consultaUrl();
-  }, [datos]);
-
+    if(error){
+      alertify.error('Hubo un error');
+    }
+    console.log(data)
+  }, [error]);
+  let contador=0;
+  if (loading) return <div>Cargando...</div>
   return (
     <>
       <Menu />
       <ContenidoMenu>
         <h1 className="fst-italic">Gestionar proyectos </h1>
         <div className="w-100 d-flex justify-content-start p-5 mb-1 mt-2">
-          <Button variant="primary" onClick={()=>setShowNuevo(true)}>
-            Nuevo proyecto
-          </Button>
+          {data.userByEmail.role==='admin' ? null:
+            <Button variant="primary" onClick={()=>setShowNuevo(true)}>
+              Nuevo proyecto
+            </Button>
+          }                   
         </div>
         
         <div className="d-flex justify-content-start flex-row gap-5 flex-wrap w-100 p-5 overflow-scroll shadow">
@@ -58,10 +83,11 @@ const Proyectos = () => {
               </tr>
             </thead>
             <tbody>
-              {datos.map((dato) => (
+              {data.allProjects.map((dato) => (
                 <RecordProyectos 
-                  key={dato.id} 
+                  key={dato._id} 
                   dato={dato} 
+                  contador={contador+=1}
                   setProyectoEditar={setProyectoEditar}
                   setShowEditar={setShowEditar}
                 />
