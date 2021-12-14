@@ -7,21 +7,46 @@ import Header from "./Header";
 import Formm from "react-bootstrap/Form";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
-// import { string } from "yup";
 import Error from "./Error";
 import Footer from "./Footer";
-import { useState } from "react";
+import { useNavigate } from 'react-router-dom';
+import { useMutation, gql } from '@apollo/client';
+import Alertify from "alertify.js";
+
+
+const LOGIN = gql`
+  mutation LoginUser($email: String!, $password: String!) {
+    loginUser(email: $email, password: $password)
+  }
+`;
+
+const inicioSesion = Yup.object().shape({
+  email: Yup.string()
+    .email("Email no valido!")
+    .required("Ingresa tu email !"),
+  password: Yup.string().required("Ingresa tu clave !"),
+});
 
 const Login = () => {
-  const handleSubmit = (values) => {
-    console.log("Arreglo" + values);
-  };
-  const inicioSesion = Yup.object().shape({
-    email: Yup.string()
-      .email("Email no valido!")
-      .required("Ingresa tu email !"),
-    clave: Yup.string().required("Ingresa tu clave !"),
-  });
+
+  const [loginUser] = useMutation(LOGIN);
+  const navigate = useNavigate();
+
+  const handleSubmit = values => {
+    loginUser({
+      variables: {
+        ...values,
+      }
+    })
+    .then(response => {
+      Alertify.success("Login correcto!"); 
+      sessionStorage.setItem('token', response.data.loginUser);
+      sessionStorage.setItem('email', values.email)
+      navigate('/menu/home');
+    })
+    .catch(() => Alertify.error("Hubo un error al iniciar sesion!"));
+  }; 
+
   return (
     <>
       <Header />
@@ -29,7 +54,7 @@ const Login = () => {
         <Formik
           initialValues={{
             email: "",
-            clave: "",
+            password: "",
           }}
           onSubmit={(values) => {
             handleSubmit(values);
@@ -63,13 +88,13 @@ const Login = () => {
                   <Field
                     type="password"
                     placeholder="Ingresa tu contraseña"
-                    name="clave"
+                    name="password"
                     className={`form-control ${
-                      errors.clave && touched.clave && "is-invalid"
+                      errors.password && touched.password && "is-invalid"
                     }`}
                   />
-                  {errors.clave && touched.clave ? (
-                    <Error>{errors.clave}</Error>
+                  {errors.password && touched.password ? (
+                    <Error>{errors.password}</Error>
                   ) : null}
                 </Formm.Group>
                 <Boton variante="primary" tipo="submit" clase="w-100">
