@@ -1,9 +1,13 @@
 import Menu from "../MenuPrincipal";
 import ContenidoMenu from "../ContenidoMenu";
 import Footer from "../Footer";
-import { Table } from "react-bootstrap";
+import Row from "react-bootstrap/Row";
+import { Table, Button } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
+import Spinner from "../Formularios/Spinner";
 import Alertify from "alertify.js";
+import VentanModal from "../VentanaModal";
+import NuevaIncripcion from "../Formularios/NuevaIncripcion";
 import { useMutation, useQuery, gql } from "@apollo/client";
 import RecordIncripciones from "../Tables/RecordIncripciones";
 const Inscripciones = () => {
@@ -29,6 +33,8 @@ const Inscripciones = () => {
   `;
 
   const { data, error, loading } = useQuery(allEnrollments);
+
+  const [show, setShow] = useState(false);
   console.log(data);
   useEffect(() => {
     if (error) {
@@ -36,14 +42,16 @@ const Inscripciones = () => {
     }
   }, [error]);
 
-  if (loading) return <div>Cargando....</div>;
+  if (loading) return <Spinner />;
   return (
     <>
       <Menu />
       <ContenidoMenu>
         <h1 className="fst-italic">Gestionar inscripciones</h1>
-
         <div className="d-flex justify-content-start flex-row gap-5 flex-wrap w-100 p-5 overflow-scroll shadow">
+          <button className="btn btn-primary" onClick={setShow}>
+            Nueva Incripcion
+          </button>
           <Table striped bordered hover size="sm">
             <thead>
               <tr>
@@ -66,6 +74,9 @@ const Inscripciones = () => {
           </Table>
         </div>
       </ContenidoMenu>
+      <VentanModal titulo="Nueva Incripcion" setShow={setShow} show={show}>
+        <NuevaIncripcion setShow={setShow} />
+      </VentanModal>
     </>
   );
 };

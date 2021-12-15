@@ -4,22 +4,36 @@ import Footer from "../Footer";
 import { Table } from "react-bootstrap";
 import RecordAvance from "../Tables/RecordAvance";
 import React, { useState, useEffect } from "react";
+
+import Spinner from "../Formularios/Spinner";
+import Alertify from "alertify.js";
+import { useMutation, useQuery, gql } from "@apollo/client";
 const Avances = () => {
   const [datos, setdatos] = useState([]);
   const [modal, setShow] = useState(false);
-  useEffect(() => {
-    const consultaUrl = async () => {
-      try {
-        const url = `http://localhost:4000/avances`;
-        const respuesta = await fetch(url);
-        const resultado = await respuesta.json();
-        setdatos(resultado);
-      } catch (error) {
-        console.log("ocurrio un erro " + error);
+  const allAdvances = gql`
+    query allAdvances {
+      allAdvances {
+        addDate
+        description
+        observations
+        project {
+          _id
+          name
+        }
       }
-    };
-    consultaUrl();
-  }, []);
+    }
+  `;
+
+  const { data, error, loading } = useQuery(allAdvances);
+  useEffect(() => {
+    if (error) {
+      Alertify.error("Hubo un error!");
+    }
+  }, [error]);
+
+  if (loading) return <Spinner />;
+
   return (
     <>
       <Menu />
@@ -29,17 +43,17 @@ const Avances = () => {
           <Table striped bordered hover size="sm">
             <thead>
               <tr>
-                <th></th>
-                <th>Projecto</th>
                 <th>Fecha</th>
                 <th>Descripcion</th>
                 <th>Observacion</th>
+                <th>Id Projecto</th>
+                <th> Projecto</th>
                 <th>Opciones</th>
               </tr>
             </thead>
             <tbody>
-              {datos.map((dato) => (
-                <RecordAvance key={dato.id} dato={dato} setShow={setShow} />
+              {data.allAdvances.map((dato) => (
+                <RecordAvance key={dato.addDate} dato={dato} />
               ))}
             </tbody>
           </Table>
