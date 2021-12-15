@@ -6,12 +6,12 @@ import ActualizarDescription from "../Formularios/ActualizarDescription";
 import VentanaModal from "../VentanaModal";
 
 const RecorAvance = ({ dato }) => {
-  const { project_id, addDate, description, observations, id } = dato;
+  const { project, addDate, description, observations } = dato;
   const [avances, setavances] = useState({});
 
   const [show, setShow] = useState(false);
-  const editarAvance = (id) => {
-    if (id === dato.id) {
+  const editarAvance = (addDate) => {
+    if (addDate === dato.addDate) {
       setavances(dato);
     }
     setShow(true);
@@ -19,13 +19,13 @@ const RecorAvance = ({ dato }) => {
   return (
     <>
       <tr>
-        <td>{id}</td>
-        <td>{project_id}</td>
         <td>{addDate}</td>
         <td className="overflow-scroll">{description}</td>
         <td>{observations}</td>
+        <td>{project._id}</td>
+        <td>{project.name}</td>
         <td>
-          <Button variant="warning" onClick={() => editarAvance(id)}>
+          <Button variant="warning" onClick={() => editarAvance(addDate)}>
             Editar
           </Button>
         </td>
