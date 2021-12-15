@@ -14,7 +14,7 @@ const ActualizarDescription = ({ setShow }) => {
         <Formm.Control as="textarea" placeholder="Descripcion" />
       </Formm.Group>
       <Modal.Footer>
-        <Button variant="danger">Eliminar</Button>
+        <Button variant="warning">Guardar cambios</Button>
         <Button variant="secondary" onClick={handleClose}>
           Cancelar
         </Button>

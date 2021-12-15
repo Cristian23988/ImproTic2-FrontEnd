@@ -56,7 +56,7 @@ const RecordProyectos = ({ dato, setProyectoEditar, setShowEditar , contador, us
     setShowEditar(true);
   };
   
-  if(user.userSesion.role==="admin" || (user.userSesion.role==="leader" && user.userSesion._id ===leader._id) ){
+  if(user.userSesion.role==="admin" || (user.userSesion.role==="leader" && user.userSesion._id ===leader._id) || (user.userSesion.role==="student")){
     return(
       <>
         <tr>
@@ -74,11 +74,14 @@ const RecordProyectos = ({ dato, setProyectoEditar, setShowEditar , contador, us
           <td>{leader.name}</td>
           <td>{status}</td>
           <td>{phase}</td>
-          <td>
-            <Button variant="warning" onClick={() => editarProyecto(_id)}>
-              Editar
-            </Button>
-          </td>
+          
+            {user.userSesion.role==="student" ? null:(
+              <td>
+                <Button variant="warning" onClick={() => editarProyecto(_id)}>
+                  Editar
+                </Button>
+              </td>
+            )}                  
         </tr>
         <VentanaModal
           titulo="Objetivos especificos"
