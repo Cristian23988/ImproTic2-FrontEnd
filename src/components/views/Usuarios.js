@@ -11,7 +11,7 @@ import jwt_decode from "jwt-decode";
 import alertify from "alertify.js";
 
 const ALLUSERS = gql`
-  query AllUsers {
+  query Query {
     allUsers {
       _id
       email
@@ -25,6 +25,7 @@ const ALLUSERS = gql`
     }
   }
 `;
+
 
 const Usuarios = () => {
   const user = jwt_decode(sessionStorage.getItem("token"));
@@ -46,7 +47,11 @@ const Usuarios = () => {
     <>
       <Menu />
       <ContenidoMenu>
-        <h1 className="fst-italic">Gestionar usuarios del sistema</h1>
+        {user.userSesion.role==='leader' ? (
+          <h1 className="fst-italic">Lista de estudiantes del sistema</h1>
+        ):(
+          <h1 className="fst-italic">Gestionar usuarios del sistema</h1>
+        ) }
         <div className="d-flex justify-content-start flex-row gap-5 flex-wrap w-100 p-5 overflow-scroll shadow">
           <Table striped bordered hover size="sm">
             <thead>
@@ -58,39 +63,36 @@ const Usuarios = () => {
                 <th>Nombre Completo</th>
                 <th>Rol</th>
                 <th>Estado</th>
-                <th>Contraseña</th>
-                {user.userSesion.role==='admin' ? (
-                  <th>Acciones</th>
-                ):null}               
+                <th>Contraseña</th>              
+                <th>Acciones</th>                      
               </tr>
             </thead>
             <tbody>       
               {data.allUsers.map((dato) => {
-                  // if(user.userSesion.role==='leader' && dato.role==='student'){
-                    return(
-                      <RecordUsuario
-                        key={dato.id}
-                        dato={dato}
-                        setShow={setShow}
-                        setEstadoEditar={setEstadoEditar}
-                        contador={(contador += 1)}
-                        user={user}
-                      />
-                    )
-                    // )}
-                  // }else{
-                  //   return(
-                  //     <RecordUsuario
-                  //       key={dato.id}
-                  //       dato={dato}
-                  //       setShow={setShow}
-                  //       setEstadoEditar={setEstadoEditar}
-                  //       contador={(contador += 1)}
-                  //       user={user}
-                  //     />
-                  //   )
-                  // }                
-              })}             
+                if(user.userSesion.role==='leader' && dato.role==='student'){
+                  return(
+                    <RecordUsuario
+                      key={dato.id}
+                      dato={dato}
+                      setShow={setShow}
+                      setEstadoEditar={setEstadoEditar}
+                      contador={(contador += 1)}
+                      user={user}
+                    />
+                  )               
+                }else if(user.userSesion.role==='admin'){
+                  return(
+                    <RecordUsuario
+                      key={dato.id}
+                      dato={dato}
+                      setShow={setShow}
+                      setEstadoEditar={setEstadoEditar}
+                      contador={(contador += 1)}
+                      user={user}
+                    />
+                  )
+                }                 
+              })}            
             </tbody>
           </Table>
         </div>

@@ -10,7 +10,8 @@ import NoAccess from "./components/NoAccess";
 import jwt_decode from "jwt-decode";
 
 function App() {
-  const user = jwt_decode(sessionStorage.getItem("token"));
+  const token=sessionStorage.getItem("token"); 
+  const user = token ? jwt_decode(token):'';
   return (
     <>
       <BrowserRouter>

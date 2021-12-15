@@ -17,14 +17,12 @@ const RecordUsuario = ({ dato, setShow, setEstadoEditar,contador, user}) => {
         <td>{fullName}</td>
         <td>{role}</td>
         <td>{status}</td>
-        <td>{password}</td>
-        {user.userSesion.role==='admin' ? (
-          <td>
+        <td>{password}</td>       
+        <td>
             <button className="btn btn-warning me-3" onClick={()=>editarEstado(_id)}>
               Editar
             </button>
-          </td>
-        ):null}      
+        </td>    
       </tr>
     </>
   );
