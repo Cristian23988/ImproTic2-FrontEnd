@@ -3,7 +3,7 @@ import ObjetivosEspecificos from "./ObjetivosEspecificos";
 import VentanaModal from "../VentanaModal";
 import { useState } from "react";
 
-const RecordProyectos = ({ dato, setProyectoEditar, setShowEditar , contador}) => {
+const RecordProyectos = ({ dato, setProyectoEditar, setShowEditar , contador, user}) => {
   const [showObjetivos, setShowObjetives] = useState(false);
 
   const {
@@ -56,37 +56,41 @@ const RecordProyectos = ({ dato, setProyectoEditar, setShowEditar , contador}) =
     setShowEditar(true);
   };
   
-  return (
-    <>
-      <tr>
-        <td>{contador}</td>
-        <td>{name}</td>
-        <td>{generalObjective}</td>
-        <td>
-          <Button variant="primary" onClick={() => setShowObjetives(true)}>
-            Ver
-          </Button>
-        </td>
-        <td>{budget}</td>
-        <td>{formatearFecha(startDate)}</td>
-        <td>{formatearFecha(endDate)}</td>
-        <td>{leader.name}</td>
-        <td>{status}</td>
-        <td>{phase}</td>
-        <td>
-          <Button variant="warning" onClick={() => editarProyecto(_id)}>
-            Editar
-          </Button>
-        </td>
-      </tr>
-      <VentanaModal
-        titulo="Objetivos especificos"
-        setShow={setShowObjetives}
-        show={showObjetivos}
-      >
-        <ObjetivosEspecificos specificObjectives={specificObjectives} />
-      </VentanaModal>
-    </>
-  );
+  if(user.userSesion.role==="admin" || (user.userSesion.role==="leader" && user.userSesion._id ===leader._id) ){
+    return(
+      <>
+        <tr>
+          <td>{contador}</td>
+          <td>{name}</td>
+          <td>{generalObjective}</td>
+          <td>
+            <Button variant="primary" onClick={() => setShowObjetives(true)}>
+              Ver
+            </Button>
+          </td>
+          <td>{budget}</td>
+          <td>{formatearFecha(startDate)}</td>
+          <td>{formatearFecha(endDate)}</td>
+          <td>{leader.name}</td>
+          <td>{status}</td>
+          <td>{phase}</td>
+          <td>
+            <Button variant="warning" onClick={() => editarProyecto(_id)}>
+              Editar
+            </Button>
+          </td>
+        </tr>
+        <VentanaModal
+          titulo="Objetivos especificos"
+          setShow={setShowObjetives}
+          show={showObjetivos}
+        >
+          <ObjetivosEspecificos specificObjectives={specificObjectives} />
+        </VentanaModal>
+      </>
+    )
+  }else if( user.userSesion._id !==leader._id && user.userSesion.role==='leader'){
+    return null;
+  }
 };
 export default RecordProyectos;

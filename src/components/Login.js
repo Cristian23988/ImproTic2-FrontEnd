@@ -41,7 +41,6 @@ const Login = () => {
     .then(response => {
       Alertify.success("Login correcto!"); 
       sessionStorage.setItem('token', response.data.loginUser);
-      sessionStorage.setItem('email', values.email)
       navigate('/menu/home');
     })
     .catch(() => Alertify.error("Hubo un error al iniciar sesion!"));
