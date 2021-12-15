@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import ActualizarStatus from "../Formularios/ActualizarStatus";
 import VentanaModal from "../VentanaModal";
 import { Table } from "react-bootstrap";
-
+import Spinner from "../Formularios/Spinner";
 const Usuarios = () => {
   const [datos, setdatos] = useState([]);
   //estado para el modal de actualizar
@@ -25,7 +25,7 @@ const Usuarios = () => {
     };
     consultaUrl();
   }, []);
-  
+
   return (
     <>
       <Menu />
@@ -48,7 +48,12 @@ const Usuarios = () => {
             </thead>
             <tbody>
               {datos.map((dato) => (
-                <RecordUsuario key={dato.id} dato={dato} setShow={setShow} setEstadoEditar={setEstadoEditar}/>
+                <RecordUsuario
+                  key={dato.id}
+                  dato={dato}
+                  setShow={setShow}
+                  setEstadoEditar={setEstadoEditar}
+                />
               ))}
             </tbody>
           </Table>
