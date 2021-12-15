@@ -64,7 +64,7 @@ const MenuPrincipal = () => {
       setLinkInscripciones("");
     }
   }, []);
-
+  
   return (
     <>
       <BarraPerfil setShow={setShow} />

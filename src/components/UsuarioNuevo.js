@@ -1,7 +1,6 @@
 import Formm from "react-bootstrap/Form";
 import IconEmail from "../images/Icons/IconEmail";
 import IconEstudiantes from "../images/Icons/IconEstudiantes";
-import IconUsuarios from "../images/Icons/IconUsuarios";
 import IconRol from "../images/Icons/IconRol";
 import IconClave from "../images/Icons/IconClave";
 import IconNombre from "../images/Icons/IconNombre";

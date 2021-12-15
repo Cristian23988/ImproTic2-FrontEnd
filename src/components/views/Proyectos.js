@@ -8,12 +8,10 @@ import ActualizarProyecto from '../Formularios/ActualizarProyecto';
 import NuevoProyecto from '../Formularios/NuevoProyecto';
 import { useQuery, gql } from '@apollo/client';
 import alertify from "alertify.js";
+import jwt_decode from 'jwt-decode';
 
-const userByEmail = gql `
-  query UserByEmail($email: String!) {
-    userByEmail(email: $email) {
-      role
-    }
+const allProjects = gql `
+  query AllProjects {
     allProjects {
       _id
       name
@@ -22,25 +20,22 @@ const userByEmail = gql `
       budget
       startDate
       endDate
-      leader_id
       status
       phase
       leader {
+        _id
         name
       }
     }
   }
 `;
 const Proyectos = () => {
-  let correo=sessionStorage.getItem('email');
-  // const {data, load} = useQuery();
 
-  const {data, error, loading} = useQuery(userByEmail, {
-    variables: { email: correo },
-  });
+  const user = jwt_decode(sessionStorage.getItem('token')); 
+
+  const {data, error, loading} = useQuery(allProjects);
   //hook para pasar la info del proyecto al modal de editar
   const [proyectoEditar, setProyectoEditar]= useState({});
-
   const [showEditar, setShowEditar]= useState(false);
   const [showNuevo, setShowNuevo]= useState(false);
 
@@ -48,8 +43,8 @@ const Proyectos = () => {
     if(error){
       alertify.error('Hubo un error');
     }
-    console.log(data)
   }, [error]);
+
   let contador=0;
   if (loading) return <div>Cargando...</div>
   return (
@@ -58,7 +53,7 @@ const Proyectos = () => {
       <ContenidoMenu>
         <h1 className="fst-italic">Gestionar proyectos </h1>
         <div className="w-100 d-flex justify-content-start p-5 mb-1 mt-2">
-          {data.userByEmail.role==='admin' ? null:
+          {user.userSesion.role==='admin' ? null:
             <Button variant="primary" onClick={()=>setShowNuevo(true)}>
               Nuevo proyecto
             </Button>
@@ -90,6 +85,7 @@ const Proyectos = () => {
                   contador={contador+=1}
                   setProyectoEditar={setProyectoEditar}
                   setShowEditar={setShowEditar}
+                  user={user}
                 />
               ))}
             </tbody>
@@ -104,6 +100,7 @@ const Proyectos = () => {
         <ActualizarProyecto
           setShowEditar={setShowEditar}
           proyectoEditar={proyectoEditar}
+          user={user}
         />
       </VentanaModal>
       <VentanaModal
@@ -112,7 +109,8 @@ const Proyectos = () => {
         show={showNuevo}
       >
         <NuevoProyecto
-          setShowEditar={setShowNuevo}
+          setShowNuevo={setShowNuevo}
+          user={user}
         />
       </VentanaModal>
     </>
