@@ -11,8 +11,10 @@ import ActualizarUsuario from "./Formularios/ActualizarUsuario";
 import VentanaModal from "./VentanaModal";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import jwt_decode from "jwt-decode";
 
 const MenuPrincipal = () => {
+  const user = jwt_decode(sessionStorage.getItem("token"));
   const encabezado = {
     height: "10%",
     width: "15%",
@@ -100,19 +102,21 @@ const MenuPrincipal = () => {
         >
           <IconHome /> Home
         </Link>
-        <Link
-          to="/menu/usuarios"
-          className={`${linkUsuarios} nav-link text-white text-center`}
-          onClick={() => {
-            setLinkUsuarios("active");
-            setLinkHome("");
-            setLinkProyectos("");
-            setLinkAvances("");
-            setLinkInscripciones("");
-          }}
-        >
-          <IconUsuarios /> Usuarios
-        </Link>
+        {user.userSesion.role==="student" ? null:(
+          <Link
+            to="/menu/usuarios"
+            className={`${linkUsuarios} nav-link text-white text-center`}
+            onClick={() => {
+              setLinkUsuarios("active");
+              setLinkHome("");
+              setLinkProyectos("");
+              setLinkAvances("");
+              setLinkInscripciones("");
+            }}
+          >
+            <IconUsuarios /> Usuarios
+          </Link>
+        )}
         <Link
           to="/menu/proyectos"
           className={`${linkProyectos} nav-link text-white text-center`}

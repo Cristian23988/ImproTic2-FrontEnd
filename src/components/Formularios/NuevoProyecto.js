@@ -67,32 +67,36 @@ const NuevoProyecto=({ setShowNuevo, user })=>{
       name:user.userSesion.name
     }
   }; 
+  const handleSubmit = (values) =>{
+    console.log('hola')
+    values.specificObjectives=values.specificObjectives.split(';')
+    registerProject({
+      variables:{
+      input:{
+        ...values
+      }
+    }
+    }).then(() => {
+      Alertify.success('Proyecto Creado con exito!');
+      
+      handleClose(); 
+    }).catch(() => {
+      Alertify.error("Hubo un error al crear el proyecto!");
+    });
+  }
   return (
     <>
       <Formik
         initialValues={initialValues}
-        onSubmit={(values, {resetForm}) => {
-          console.log('hola')
-          values.specificObjectives=values.specificObjectives.split(';')
-          registerProject({
-            variables:{
-              input:{
-                ...values
-              }
-            }
-          }).then(() => {
-            Alertify.success('Proyecto Creado con exito!');
-            resetForm();
-            handleClose(); 
-          }).catch(() => {
-            Alertify.error("Hubo un error al crear el proyecto!");
-          });
+        onSubmit={(values) => {
+          
+          handleSubmit(values)
         }}
         validationSchema={nuevoProyecto} //validando el form
       >
         {({ errors, touched }) => {
           return (
-            <Form>
+            <Form >
               <Formm.Group>
                 <Formm.Label>Nombre</Formm.Label>
                 <Field

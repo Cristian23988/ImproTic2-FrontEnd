@@ -1,9 +1,8 @@
-
-const RecordUsuario = ({ dato, setShow, setEstadoEditar}) => {
-  const { email, name, lastName, fullName, role, status, password, id } = dato;
+const RecordUsuario = ({ dato, setShow, setEstadoEditar,contador, user}) => {
+  const { email, name, lastName, fullName, role, status, password, _id } = dato;
   //funcion para pasar info al modal de editar
   const editarEstado=id=>{
-    if(id===dato.id){
+    if(id===dato._id){
       setEstadoEditar(dato)
     }   
     setShow(true)
@@ -11,7 +10,7 @@ const RecordUsuario = ({ dato, setShow, setEstadoEditar}) => {
   return (
     <>
       <tr>
-        <td>{id}</td>
+        <td>{contador}</td>
         <td>{email}</td>
         <td>{name}</td>
         <td>{lastName}</td>
@@ -19,11 +18,13 @@ const RecordUsuario = ({ dato, setShow, setEstadoEditar}) => {
         <td>{role}</td>
         <td>{status}</td>
         <td>{password}</td>
-        <td>
-          <button className="btn btn-warning me-3" onClick={()=>editarEstado(id)}>
-            Editar
-          </button>
-        </td>
+        {user.userSesion.role==='admin' ? (
+          <td>
+            <button className="btn btn-warning me-3" onClick={()=>editarEstado(_id)}>
+              Editar
+            </button>
+          </td>
+        ):null}      
       </tr>
     </>
   );

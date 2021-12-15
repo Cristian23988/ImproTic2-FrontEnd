@@ -6,26 +6,42 @@ import ActualizarStatus from "../Formularios/ActualizarStatus";
 import VentanaModal from "../VentanaModal";
 import { Table } from "react-bootstrap";
 import Spinner from "../Formularios/Spinner";
+import { useQuery, gql } from "@apollo/client";
+import jwt_decode from "jwt-decode";
+import alertify from "alertify.js";
+
+const ALLUSERS = gql`
+  query AllUsers {
+    allUsers {
+      _id
+      email
+      documentId
+      name
+      lastName
+      fullName
+      role
+      status
+      password
+    }
+  }
+`;
+
 const Usuarios = () => {
-  const [datos, setdatos] = useState([]);
+  const user = jwt_decode(sessionStorage.getItem("token"));
   //estado para el modal de actualizar
   const [show, setShow] = useState(false);
+  const { data, error, loading } = useQuery(ALLUSERS);
   //hook para pasar la info del proyecto al modal de editar
   const [estadoEditar, setEstadoEditar] = useState({});
-  useEffect(() => {
-    const consultaUrl = async () => {
-      try {
-        const url = `http://localhost:4000/usuarios`;
-        const respuesta = await fetch(url);
-        const resultado = await respuesta.json();
-        setdatos(resultado);
-      } catch (error) {
-        console.log("ocurrio un erro " + error);
-      }
-    };
-    consultaUrl();
-  }, []);
 
+  useEffect(() => {
+    if (error) {
+      alertify.error("Hubo un error");
+    }
+  }, [error]);
+
+  let contador = 0;
+  if (loading) return <Spinner />;
   return (
     <>
       <Menu />
@@ -43,18 +59,38 @@ const Usuarios = () => {
                 <th>Rol</th>
                 <th>Estado</th>
                 <th>Contraseña</th>
-                <th>Acciones</th>
+                {user.userSesion.role==='admin' ? (
+                  <th>Acciones</th>
+                ):null}               
               </tr>
             </thead>
-            <tbody>
-              {datos.map((dato) => (
-                <RecordUsuario
-                  key={dato.id}
-                  dato={dato}
-                  setShow={setShow}
-                  setEstadoEditar={setEstadoEditar}
-                />
-              ))}
+            <tbody>       
+              {data.allUsers.map((dato) => {
+                  // if(user.userSesion.role==='leader' && dato.role==='student'){
+                    return(
+                      <RecordUsuario
+                        key={dato.id}
+                        dato={dato}
+                        setShow={setShow}
+                        setEstadoEditar={setEstadoEditar}
+                        contador={(contador += 1)}
+                        user={user}
+                      />
+                    )
+                    // )}
+                  // }else{
+                  //   return(
+                  //     <RecordUsuario
+                  //       key={dato.id}
+                  //       dato={dato}
+                  //       setShow={setShow}
+                  //       setEstadoEditar={setEstadoEditar}
+                  //       contador={(contador += 1)}
+                  //       user={user}
+                  //     />
+                  //   )
+                  // }                
+              })}             
             </tbody>
           </Table>
         </div>
