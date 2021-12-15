@@ -2,27 +2,20 @@ import Boton from "./Buttons";
 import IconPersona from "../images/Icons/IconPersona";
 import IconConfig from "../images/Icons/IconConfig";
 import IconLogOut from "../images/Icons/IconLogOut";
-import { useQuery, gql } from '@apollo/client';
+import { useNavigate } from 'react-router-dom';
+import jwt_decode from 'jwt-decode'; 
 
-const USUARIOLOGUEADO = gql `
-  query UserByEmail($email: String!) {
-    userByEmail(email: $email) {
-      name
-      lastName
-      role
 
-    }
+const BarraPerfil = ({ setShow }) => {  
+  const navigate = useNavigate();
+  const user = jwt_decode(sessionStorage.getItem('token')); // decode your token here
+  const cerrarSesion=()=>{
+    sessionStorage.removeItem('token');
+    navigate('/');
   }
-`;
+  // if(user.exp ===0){
 
-const BarraPerfil = ({ setShow }) => {
-
-  let correo=sessionStorage.getItem('email');
-
-  const {loading, data} = useQuery(USUARIOLOGUEADO, {
-    variables: { email: correo },
-  });
-
+  // }
   const dimensionBarra = {
     width: "85%",
     height: "8%",
@@ -35,7 +28,7 @@ const BarraPerfil = ({ setShow }) => {
   const elemento = {
     width: "35%",
   };
-
+  // console.log(user)
   return (
     <>
       <div
@@ -50,7 +43,7 @@ const BarraPerfil = ({ setShow }) => {
             <IconPersona />
           </div>
           <span className="fw-bold text-dark mx-5">
-            {loading ? <p>Cargando info...</p> : data.userByEmail.role+': '+data.userByEmail.name +' '+data.userByEmail.lastName}
+            {user.userSesion.role+': '+user.userSesion.fullName}
           </span>
           <button className="btn btn-secondary" onClick={setShow}>
             <IconConfig /> Editar
@@ -58,7 +51,7 @@ const BarraPerfil = ({ setShow }) => {
         </div>
         <div style={elemento}></div>
         <div className="w-25 d-flex justify-content-end me-5">
-          <Boton variante="danger" tipo="button" clase="shadow w-auto">
+          <Boton variante="danger" tipo="button" clase="shadow w-auto" handleClick={cerrarSesion}>
             <IconLogOut /> Salir
           </Boton>
         </div>

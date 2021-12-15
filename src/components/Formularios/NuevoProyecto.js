@@ -5,65 +5,88 @@ import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import Error from "../Error";
 import Alertify from 'alertify.js';
+import {useMutation, gql } from '@apollo/client';
+import Boton from "../Buttons";
 
-const NuevoProyecto=({ setShowNuevo })=>{
-    const handleClose = () => setShowNuevo(false);
-    const handleSubmit = async (values) => {
-        values.specificObjectives=values.specificObjectives.split(';')
-        const url = 'http://localhost:4000/projectos';
-        const resultado = await fetch(url, {
-            method: "POST",
-            body: JSON.stringify(values),
-            headers: {
-            "Content-Type": "application/json",
-            },
-        });
-        const res = await resultado.json(); 
-        //alertify
-
-        Alertify.success('Proyecto Creado con exito!');
-        handleClose(); 
-        console.log(res)
-    };
-    //funcion para obtener la fecha actual
-    const obtenerFecha=()=>{
-        let fechaHoy='';
-        let fechaActual=new Date();
-        let year=fechaActual.getFullYear();
-        let month=fechaActual.getMonth();
-        let day=fechaActual.getDate();
-        fechaHoy=year+'-'+month+'-'+day;
-        return fechaHoy;
+const REGISTERPROJECT = gql`
+  mutation Mutation($input: RegInputPro!) {
+    registerProject(input: $input) {
+      _id
+      name
+      generalObjective
+      specificObjectives
+      budget
+      startDate
+      endDate
+      leader_id
+      status
+      phase
+      leader{
+        name
+      }
     }
+  }
+`;
+
+const NuevoProyecto=({ setShowNuevo, user })=>{
+
+  const [registerProject] = useMutation(REGISTERPROJECT);
+
+  const handleClose = () => setShowNuevo(false);
+  //funcion para obtener la fecha actual
+  const obtenerFecha=()=>{
+    let fechaHoy='';
+    let fechaActual=new Date();
+    let year=fechaActual.getFullYear();
+    let month=fechaActual.getMonth()+1;
+    let day=fechaActual.getDate();
+    fechaHoy=year+'-'+month+'-'+day;
+    return fechaHoy;
+  }
     
-    const nuevoProyecto = Yup.object().shape({
-      name: Yup.string().required("El nombre es obligatorio!"),
-      generalObjective:Yup.string().required("El objetivo general es obligatorio!"),
-      specificObjectives: Yup.string().required("Los objetivos especificos son obligatorios!"),
-      budget:Yup.number().required("El presupuestoes obligatorio!"),
-      endDate:Yup.date().required("La fecha de fin es obligatoria"),
-      leaderboard:Yup.string().required("El lider es obligatorio!")
-    });
-    //const valores iniciales
-    const initialValues = {
-      name:"",
-      generalObjective: "",
-      specificObjectives:"",
-      budget:"",
-      startDate: "",
-      endDate: "",
-      leader_id:"Alejo",
-      status: "inactive",
-      phase: "started",
-    };
-   
-    return (
+  const nuevoProyecto = Yup.object().shape({
+    name: Yup.string().required("El nombre es obligatorio!"),
+    generalObjective:Yup.string().required("El objetivo general es obligatorio!"),
+    specificObjectives: Yup.string().required("Los objetivos especificos son obligatorios!"),
+    budget:Yup.number().required("El presupuestoes obligatorio!"),
+    endDate:Yup.date().required("La fecha de fin es obligatoria"),
+    leaderboard:Yup.string().required("El lider es obligatorio!")
+  });
+  //const valores iniciales
+  const initialValues = {
+    name:"",
+    generalObjective: "",
+    specificObjectives:"",
+    budget:"",
+    startDate: obtenerFecha(),
+    endDate: "",
+    leader_id:user.userSesion._id,
+    status: "inactive",
+    phase: "started",
+    leader:{
+      name:user.userSesion.name
+    }
+  }; 
+  return (
     <>
       <Formik
         initialValues={initialValues}
-        onSubmit={async (values, { resetForm}) => {
-          await handleSubmit(values);
-          resetForm();
+        onSubmit={(values, {resetForm}) => {
+          console.log('hola')
+          values.specificObjectives=values.specificObjectives.split(';')
+          registerProject({
+            variables:{
+              input:{
+                ...values
+              }
+            }
+          }).then(() => {
+            Alertify.success('Proyecto Creado con exito!');
+            resetForm();
+            handleClose(); 
+          }).catch(() => {
+            Alertify.error("Hubo un error al crear el proyecto!");
+          });
         }}
         validationSchema={nuevoProyecto} //validando el form
       >
@@ -161,15 +184,16 @@ const NuevoProyecto=({ setShowNuevo })=>{
                   } `}
                   type="text"
                   name="leader_id"
+                  disabled={true}
                 />
                 {errors.leader_id && touched.leader_id ? (
                   <Error>{errors.leader_id}</Error>
                 ) : null}
               </Formm.Group>
-              <Modal.Footer>
-                <Button variant="primary" type="submit">
+              <Modal.Footer className="mt-3"> 
+                <Boton variante="primary" tipo="submit" clase="" > 
                   Agregar proyecto
-                </Button>
+                </Boton>               
                 <Button variant="secondary" onClick={handleClose}>
                   Cancelar
                 </Button>
