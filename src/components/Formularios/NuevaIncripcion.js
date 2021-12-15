@@ -87,12 +87,6 @@ const NuevaIncripcion = ({ setShow }) => {
                   } `}
                 >
                   <option value="">--Selecciona un rol--</option>
-                  {!loadingProyect &&
-                    data.AllProjects.map(({ _id, name }, index) => (
-                      <option key={index} value={name}>
-                        {name}
-                      </option>
-                    ))}
                 </Field>
                 {errors.role && touched.role ? (
                   <Error>{errors.role}</Error>
@@ -136,3 +130,9 @@ const NuevaIncripcion = ({ setShow }) => {
   );
 };
 export default NuevaIncripcion;
+/* {!loadingProyect &&
+                    data.AllProjects.map(({ _id, name }, index) => (
+                      <option key={index} value={name}>
+                        {name}
+                      </option>
+                    ))}*/
