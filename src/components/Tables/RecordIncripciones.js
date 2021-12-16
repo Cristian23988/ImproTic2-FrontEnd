@@ -1,4 +1,10 @@
-const RecordIncripciones = ({ dato, setShow, setEstadoEditar }) => {
+const RecordIncripciones = ({
+  dato,
+  setestado,
+  setEstadoEditar,
+  user,
+  contador,
+}) => {
   const {
     _id,
     project_id,
@@ -13,28 +19,36 @@ const RecordIncripciones = ({ dato, setShow, setEstadoEditar }) => {
     if (id === dato._id) {
       setEstadoEditar(dato);
     }
-    setShow(true);
+    setestado(true);
   };
-
+  const formatearFecha = (fecha) => {
+    const fechaNueva = new Date(fecha);
+    const opciones = {
+      year: "numeric",
+      month: "long",
+      day: "2-digit",
+    };
+    return fechaNueva.toLocaleString("es-ES", opciones);
+  };
   return (
     <>
       <tr>
-        <td>{_id} </td>
-        <td>{project_id}</td>
-        <td>{user_id}</td>
-        <td>{status}</td>
-        <td>{enrollmentDate}</td>
-        <td>{egressDate}</td>
+        <td>{contador} </td>
         <td>{project.name}</td>
         <td>{student.fullName}</td>
-        <td>
-          <button
-            className="btn btn-warning me-3"
-            onClick={() => editarEstado(_id)}
-          >
-            Editar
-          </button>
-        </td>
+        <td>{status}</td>
+        <td>{formatearFecha(enrollmentDate)}</td>
+        <td>{egressDate}</td>
+        {user.userSesion.role === "leader" ? (
+          <td>
+            <button
+              className="btn btn-warning me-3"
+              onClick={() => editarEstado(_id)}
+            >
+              Editar
+            </button>
+          </td>
+        ) : null}
       </tr>
     </>
   );

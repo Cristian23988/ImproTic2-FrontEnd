@@ -11,6 +11,7 @@ import NuevaIncripcion from "../Formularios/NuevaIncripcion";
 import { useMutation, useQuery, gql } from "@apollo/client";
 import RecordIncripciones from "../Tables/RecordIncripciones";
 import ActualizarIncripciones from "../Formularios/ActualizarIncripciones";
+import jwt_decode from "jwt-decode";
 const allEnrollments = gql`
   query AllEnrollments {
     allEnrollments {
@@ -32,10 +33,12 @@ const allEnrollments = gql`
   }
 `;
 const Inscripciones = () => {
+  const user = jwt_decode(sessionStorage.getItem("token"));
   const { data, error, loading } = useQuery(allEnrollments);
   const [show, setShow] = useState(false);
+  const [estado, setestado] = useState(false);
   const [estadoEditar, setEstadoEditar] = useState({});
-
+  let contador = 0;
   useEffect(() => {
     if (error) {
       Alertify.error("Hubo un error!");
@@ -49,9 +52,12 @@ const Inscripciones = () => {
       <ContenidoMenu>
         <h1 className="fst-italic">Gestionar inscripciones</h1>
         <div className="d-flex justify-content-start flex-row gap-5 flex-wrap w-100 p-5 overflow-scroll shadow">
-          <button className="btn btn-primary" onClick={setShow}>
-            Nueva Incripcion
-          </button>
+          {user.userSesion.role === "student" ? (
+            <button className="btn btn-primary" onClick={setShow}>
+              Nueva Incripcion
+            </button>
+          ) : null}
+
           <Table striped bordered hover size="sm">
             <thead>
               <tr>
@@ -61,9 +67,8 @@ const Inscripciones = () => {
                 <th>Estado</th>
                 <th>Fecha De Incripcion</th>
                 <th>Fecha Final</th>
-                <th>Projecto</th>
-                <th>Studen</th>
-                <th>Acciones</th>
+
+                {user.userSesion.role === "leader" ? <th>Acciones</th> : null}
               </tr>
             </thead>
             <tbody>
@@ -71,8 +76,10 @@ const Inscripciones = () => {
                 <RecordIncripciones
                   key={dato._id}
                   dato={dato}
-                  setShow={setShow}
+                  setestado={setestado}
                   setEstadoEditar={setEstadoEditar}
+                  user={user}
+                  contador={(contador += 1)}
                 />
               ))}
             </tbody>
@@ -80,15 +87,21 @@ const Inscripciones = () => {
         </div>
       </ContenidoMenu>
 
-      <VentanaModal titulo="Actualizar Estado" setShow={setShow} show={show}>
-        <ActualizarIncripciones setShow={setShow} estadoEditar={estadoEditar} />
+      <VentanaModal titulo="Nueva Incripcion" setShow={setShow} show={show}>
+        <NuevaIncripcion setShow={setShow} user={user} />
+      </VentanaModal>
+
+      <VentanaModal
+        titulo="Actualizar Estado"
+        setShow={setestado}
+        show={estado}
+      >
+        <ActualizarIncripciones
+          setestado={setestado}
+          estadoEditar={estadoEditar}
+        />
       </VentanaModal>
     </>
   );
 };
 export default Inscripciones;
-/*   
-
-  <VentanaModal titulo="Nueva Incripcion" setShow={setShow} show={show}>
-        <NuevaIncripcion setShow={setShow} />
-      </VentanaModal>*/

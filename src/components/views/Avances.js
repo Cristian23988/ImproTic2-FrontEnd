@@ -7,28 +7,33 @@ import React, { useState, useEffect } from "react";
 import Spinner from "../Formularios/Spinner";
 import Alertify from "alertify.js";
 import ActualizarDescription from "../Formularios/ActualizarDescription";
+import ActualizarObservacion from "../Formularios/ActualizarObservacion";
 import VentanaModal from "../VentanaModal";
 import { useMutation, useQuery, gql } from "@apollo/client";
 
 const allAdvances = gql`
-  query AllAdvances {
+  query Query {
     allAdvances {
       _id
       project_id
       addDate
       description
+      observations
       project {
         _id
         name
+        status
       }
     }
   }
 `;
 const Avances = () => {
   const [estado, setavances] = useState({});
+  const [des, setDesc] = useState(false);
   const [show, setShow] = useState(false);
+  const [descripcionEditar, setdescripcionoEditar] = useState({});
   const { data, error, loading } = useQuery(allAdvances);
-
+  let contador = 0;
   useEffect(() => {
     if (error) {
       Alertify.error("Hubo un error!");
@@ -46,11 +51,14 @@ const Avances = () => {
             <thead>
               <tr>
                 <th>id</th>
-                <th>Id projecto</th>
                 <th>Fecha</th>
                 <th>Descripcion</th>
+                <th>Observacion</th>
                 <th> Projecto</th>
-                <th>Opciones</th>
+                <th>Estado Proyecto</th>
+                <th colSpan={2} className="text-center">
+                  Opciones
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -60,6 +68,9 @@ const Avances = () => {
                   dato={dato}
                   setShow={setShow}
                   setavances={setavances}
+                  setdescripcionoEditar={setdescripcionoEditar}
+                  setDesc={setDesc}
+                  contador={(contador += 1)}
                 />
               ))}
             </tbody>
@@ -73,6 +84,17 @@ const Avances = () => {
         show={show}
       >
         <ActualizarDescription setShow={setShow} estado={estado} />
+      </VentanaModal>
+
+      <VentanaModal
+        titulo="Actualizar observacion"
+        setShow={setDesc}
+        show={des}
+      >
+        <ActualizarObservacion
+          setDesc={setDesc}
+          descripcionEditar={descripcionEditar}
+        />
       </VentanaModal>
     </>
   );

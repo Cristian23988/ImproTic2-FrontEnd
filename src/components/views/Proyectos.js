@@ -49,11 +49,12 @@ const Proyectos = () => {
   if (loading) return <Spinner />;
   return (
     <>
-      <Menu/>
+      <Menu />
       <ContenidoMenu>
         <h1 className="fst-italic">Gestionar proyectos </h1>
         <div className="w-100 d-flex justify-content-start p-5 mb-1 mt-2">
-          {user.userSesion.role === "admin" || user.userSesion.role === "student" ? null : (
+          {user.userSesion.role === "admin" ||
+          user.userSesion.role === "student" ? null : (
             <Button variant="primary" onClick={() => setShowNuevo(true)}>
               Nuevo proyecto
             </Button>
@@ -74,7 +75,7 @@ const Proyectos = () => {
                 <th>Lider</th>
                 <th>Estado</th>
                 <th>Fase</th>
-                {user.userSesion.role === "student" ? null:(<th>Acciones</th>)}      
+                {user.userSesion.role === "student" ? null : <th>Acciones</th>}
               </tr>
             </thead>
             <tbody>
@@ -103,6 +104,7 @@ const Proyectos = () => {
           user={user}
         />
       </VentanaModal>
+
       <VentanaModal
         titulo="Crear proyecto"
         setShow={setShowNuevo}

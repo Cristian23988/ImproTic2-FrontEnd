@@ -3,7 +3,13 @@ import ObjetivosEspecificos from "./ObjetivosEspecificos";
 import VentanaModal from "../VentanaModal";
 import { useState } from "react";
 
-const RecordProyectos = ({ dato, setProyectoEditar, setShowEditar , contador, user}) => {
+const RecordProyectos = ({
+  dato,
+  setProyectoEditar,
+  setShowEditar,
+  contador,
+  user,
+}) => {
   const [showObjetivos, setShowObjetives] = useState(false);
 
   const {
@@ -18,16 +24,16 @@ const RecordProyectos = ({ dato, setProyectoEditar, setShowEditar , contador, us
     leader,
     _id,
   } = dato;
-  
-  const formatearFecha=fecha=>{
-    const fechaNueva=new Date(fecha);
-    const opciones={
-        year:'numeric',
-        month:'long',
-        day:'2-digit'
-    }
-    return fechaNueva.toLocaleString('es-ES', opciones);
-  } 
+
+  const formatearFecha = (fecha) => {
+    const fechaNueva = new Date(fecha);
+    const opciones = {
+      year: "numeric",
+      month: "long",
+      day: "2-digit",
+    };
+    return fechaNueva.toLocaleString("es-ES", opciones);
+  };
   //funcion para añadir ; al final de cada objetivo especifico
   const separarStringCaracter = (objetivos) => {
     let cadena = objetivos.toString();
@@ -55,9 +61,13 @@ const RecordProyectos = ({ dato, setProyectoEditar, setShowEditar , contador, us
     }
     setShowEditar(true);
   };
-  
-  if(user.userSesion.role==="admin" || (user.userSesion.role==="leader" && user.userSesion._id ===leader._id) || (user.userSesion.role==="student")){
-    return(
+
+  if (
+    user.userSesion.role === "admin" ||
+    (user.userSesion.role === "leader" && user.userSesion._id === leader._id) ||
+    user.userSesion.role === "student"
+  ) {
+    return (
       <>
         <tr>
           <td>{contador}</td>
@@ -74,14 +84,6 @@ const RecordProyectos = ({ dato, setProyectoEditar, setShowEditar , contador, us
           <td>{leader.name}</td>
           <td>{status}</td>
           <td>{phase}</td>
-          
-            {user.userSesion.role==="student" ? null:(
-              <td>
-                <Button variant="warning" onClick={() => editarProyecto(_id)}>
-                  Editar
-                </Button>
-              </td>
-            )}                  
         </tr>
         <VentanaModal
           titulo="Objetivos especificos"
@@ -91,8 +93,11 @@ const RecordProyectos = ({ dato, setProyectoEditar, setShowEditar , contador, us
           <ObjetivosEspecificos specificObjectives={specificObjectives} />
         </VentanaModal>
       </>
-    )
-  }else if( user.userSesion._id !==leader._id && user.userSesion.role==='leader'){
+    );
+  } else if (
+    user.userSesion._id !== leader._id &&
+    user.userSesion.role === "leader"
+  ) {
     return null;
   }
 };

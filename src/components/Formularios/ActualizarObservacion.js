@@ -1,46 +1,45 @@
 import { Button } from "react-bootstrap";
-import Modal from "react-bootstrap/Modal";
 import Formm from "react-bootstrap/Form";
+import Modal from "react-bootstrap/Modal";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import Error from "../Error";
 import { useMutation, gql } from "@apollo/client";
 import Alertify from "alertify.js";
-const UpdateEnrollment = gql`
-  mutation Mutation($id: ID!, $input: UpdateInputEn!) {
-    updateEnrollment(_id: $id, input: $input) {
+const updateObes = gql`
+  mutation UpdateAdvance($id: ID!, $input: UpdateInputAd!) {
+    updateAdvance(_id: $id, input: $input) {
       _id
     }
   }
 `;
-const ActuailizarIncripciones = ({ setestado, estadoEditar }) => {
-  const handleClose = () => setestado(false);
-  const [updateStatus] = useMutation(UpdateEnrollment);
-  console.log(updateStatus);
-  const editarEstado = Yup.object().shape({
-    status: Yup.string().required("El estado es obligadorio !"),
+const ActualizarObservacion = ({ setDesc, descripcionEditar }) => {
+  const handleClose = () => setDesc(false);
+  const [updateObservacion] = useMutation(updateObes);
+  const editarObservacion = Yup.object().shape({
+    observations: Yup.string().required("La observacion es obligadorio !"),
   });
-  let idincripcion = estadoEditar._id;
+  let idobservacion = descripcionEditar._id;
+  console.log(idobservacion);
   const initialValues = {
-    status: estadoEditar.status,
+    observations: descripcionEditar.observations,
   };
-
   return (
     <>
       <Formik
         initialValues={initialValues}
-        validationSchema={editarEstado} //validando el form
+        validationSchema={editarObservacion} //validando el form
         onSubmit={(values) => {
-          updateStatus({
+          updateObservacion({
             variables: {
-              id: idincripcion,
+              id: idobservacion,
               input: {
                 ...values,
               },
             },
           })
             .then(() => {
-              Alertify.success("Usuario modificado con Exito!");
+              Alertify.success("Observacio modificado con Exito!");
             })
             .catch(() => {
               Alertify.error("Hubo un error!");
@@ -52,20 +51,17 @@ const ActuailizarIncripciones = ({ setestado, estadoEditar }) => {
           return (
             <Form>
               <Formm.Group>
-                <Formm.Label>Estado</Formm.Label>
+                <Formm.Label>Observacion</Formm.Label>
                 <Field
                   className={`form-control ${
-                    errors.status && touched.status && "is-invalid"
+                    errors.observations && touched.observations && "is-invalid"
                   } `}
-                  as="select"
-                  name="status"
-                >
-                  <option value="">--Seleccione una opcion--</option>
-                  <option value="acepted">Activo</option>
-                  <option value="rejected">Inactivo</option>
-                </Field>
-                {errors.status && touched.status ? (
-                  <Error>{errors.status}</Error>
+                  as="textarea"
+                  name="observations"
+                  className="form-control"
+                ></Field>
+                {errors.observations && touched.observations ? (
+                  <Error>{errors.observations}</Error>
                 ) : null}
               </Formm.Group>
               <Modal.Footer>
@@ -84,4 +80,4 @@ const ActuailizarIncripciones = ({ setestado, estadoEditar }) => {
   );
 };
 
-export default ActuailizarIncripciones;
+export default ActualizarObservacion;
