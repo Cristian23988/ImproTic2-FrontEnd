@@ -47,7 +47,7 @@ const NuevaIncripcion = ({ setShow, user }) => {
   const initialValues = {
     project_id: "",
     user_id: user.userSesion._id,
-    enrollmentDate: obtenerFecha(),
+    enrollmentDate: "",
     status: "reject",
     project: "",
     student: user.userSesion._id,
@@ -99,36 +99,6 @@ const NuevaIncripcion = ({ setShow, user }) => {
                 ) : null}
               </Formm.Group>
 
-              <Formm.Group className="m-2">
-                <Formm.Label className="fw-bold">Estudiante</Formm.Label>
-                <Field
-                  className={`form-control ${
-                    errors.student && touched.student && "is-invalid"
-                  } `}
-                  type="text"
-                  name="student"
-                  placeholder="Ingresa tu identificacion"
-                />
-                {errors.student && touched.student ? (
-                  <Error>{errors.student}</Error>
-                ) : null}
-              </Formm.Group>
-
-              <Formm.Group className="m-2">
-                <Formm.Label className="fw-bold">Fecha</Formm.Label>
-                <Field
-                  className={`form-control ${
-                    errors.enrollmentDate &&
-                    touched.enrollmentDate &&
-                    "is-invalid"
-                  } `}
-                  type="date"
-                  name="enrollmentDate"
-                />
-                {errors.enrollmentDate && touched.enrollmentDate ? (
-                  <Error>{errors.enrollmentDate}</Error>
-                ) : null}
-              </Formm.Group>
               <Modal.Footer className="mt-3">
                 <Button variant="primary" type="submit">
                   Incribirme
