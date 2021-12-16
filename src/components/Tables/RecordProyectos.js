@@ -26,7 +26,7 @@ const RecordProyectos = ({
   } = dato;
 
   const formatearFecha = (fecha) => {
-    const fechaNueva = new Date(fecha);
+    const fechaNueva = new Date.now(fecha);
     const opciones = {
       year: "numeric",
       month: "long",
