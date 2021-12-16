@@ -8,12 +8,14 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import RegistroUsuarios from "./components/RegistroUsuarios";
 import NoAccess from "./components/NoAccess";
 import jwt_decode from "jwt-decode";
+import PrivateRoute from "./PrivateRoute";
 
 function App() {
-  const user = jwt_decode(sessionStorage.getItem("token"));
+  const token=sessionStorage.getItem("token"); 
+  const user = token ? jwt_decode(token):'';
   return (
     <>
-      <BrowserRouter>
+      <BrowserRouter>  
         <Routes>
           <Route>
             <Route index path="/" element={<Login />} />
@@ -21,15 +23,36 @@ function App() {
             <Route exact path="no-access" element={<NoAccess />} />
           </Route>
           <Route>
-            <Route index path="menu/home" element={<Home />} />
-            {user.userSesion.role==='student' ? (<Route exact path="no-access" element={<NoAccess />} />):(
-              <Route exact path="menu/usuarios" element={<Usuarios />} />
-            )}
-            <Route exact path="menu/proyectos" element={<Proyectos />} />
-            <Route exact path="menu/avances" element={<Avances />} />
-            <Route exact path="menu/inscripciones" element={<Inscripciones/>} />          
+            <Route index path="menu/home" element={
+                <PrivateRoute>
+                  <Home />
+                </PrivateRoute>
+              } 
+            />
+            <Route exact path="menu/usuarios" element={
+              <PrivateRoute>
+                <Usuarios />
+              </PrivateRoute>
+              } 
+            />            
+            <Route exact path="menu/proyectos" element={
+              <PrivateRoute>
+                <Proyectos />
+              </PrivateRoute>             
+            } />
+            <Route exact path="menu/avances" element={
+              <PrivateRoute>
+                <Avances />
+              </PrivateRoute>
+              } 
+            />
+            <Route exact path="menu/inscripciones" element={
+              <PrivateRoute>
+                <Inscripciones/>
+              </PrivateRoute>
+            }/>          
           </Route>
-        </Routes>
+        </Routes>                          
       </BrowserRouter>
     </>
   );

@@ -4,14 +4,22 @@ import IconConfig from "../images/Icons/IconConfig";
 import IconLogOut from "../images/Icons/IconLogOut";
 import { useNavigate } from 'react-router-dom';
 import jwt_decode from 'jwt-decode'; 
-
+import Alertify from 'alertify.js';
 
 const BarraPerfil = ({ setShow }) => {  
   const navigate = useNavigate();
-  const user = jwt_decode(sessionStorage.getItem('token')); // decode your token here
-  const cerrarSesion=()=>{
-    sessionStorage.removeItem('token');
-    navigate('/');
+  let token=sessionStorage.getItem('token')
+  const user = jwt_decode(token); // decode your token here
+  const cerrarSesion=()=>{ 
+    Alertify.confirm("¿Desea salir del sistema?",
+    function(){
+      sessionStorage.removeItem('token');
+      navigate('/');
+      Alertify.success('correcto !');
+    },
+    function(){
+      Alertify.error('Accion cancelada!');
+    });
   }
   // if(user.exp ===0){
 
@@ -46,7 +54,7 @@ const BarraPerfil = ({ setShow }) => {
             {user.userSesion.role+': '+user.userSesion.fullName}
           </span>
           <button className="btn btn-secondary" onClick={setShow}>
-            <IconConfig /> Editar
+            <IconConfig /> Editar perfil
           </button>
         </div>
         <div style={elemento}></div>

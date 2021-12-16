@@ -1,25 +1,28 @@
 import { Button } from "react-bootstrap";
-
+import jwt_decode from 'jwt-decode';
 import Modal from "react-bootstrap/Modal";
 import Formm from "react-bootstrap/Form";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import Error from "../Error";
+import { useMutation, gql } from "@apollo/client";
+import Alertify from "alertify.js";
+
+const UPDATEPERFIL= gql`
+  mutation Mutation($id: ID!, $input: UpdateInputUs!) {
+    updateUser(_id: $id, input: $input) {
+      _id
+    }
+  }
+`;
+
 const ActualizarUsuario = ({ setShow }) => {
-  const handleSubmit = async (values) => {
-    const url = "http://localhost:4000/usuarios";
-    const resultado = await fetch(url, {
-      method: "POST",
-      body: JSON.stringify(values),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const res = await resultado.json();
-    console.log(resultado);
-  };
+
+  const user = jwt_decode(sessionStorage.getItem('token')); // decode your token here
+  const [updateUser] = useMutation(UPDATEPERFIL);
+ 
   const handleClose = () => setShow(false);
-  const RegistroUsuario = Yup.object().shape({
+  const perfilUsuario = Yup.object().shape({
     email: Yup.string()
       .email("Email no valido")
       .required("El email es obligatorio!"),
@@ -34,24 +37,36 @@ const ActualizarUsuario = ({ setShow }) => {
   });
   //const valores iniciales
   const initialValues = {
-    email: "",
-    documentId: "",
-    name: "",
-    lastName: "",
-    fullName: "",
-    status: "active",
-    role: "",
-    password: "",
+    email: user.userSesion.email,
+    documentId:  user.userSesion.documentId,
+    name:  user.userSesion.name,
+    lastName:  user.userSesion.lastName,
+    fullName:  user.userSesion.fullName,
+    status:  user.userSesion.status,
+    password: user.userSesion.password,
   };
+  let idUser=user.userSesion._id;
   return (
     <>
       <Formik
         initialValues={initialValues}
-        onSubmit={async (values, { resetForm }) => {
-          await handleSubmit(values);
-          resetForm();
+        onSubmit={(values) => {
+          //actualizar perfil de usuario
+          updateUser({
+            variables:{
+              id:idUser,
+              input:{
+                ...values
+              }
+            }
+          }).then(() => {
+            Alertify.success("Perfil modificado con Exito!");
+          }).catch(() => {
+            Alertify.error("Hubo un error!");
+          })  
+          handleClose();
         }}
-        validationSchema={RegistroUsuario} //validando el form
+        validationSchema={perfilUsuario} //validando el form
       >
         {({ errors, touched }) => {
           return (
@@ -142,7 +157,7 @@ const ActualizarUsuario = ({ setShow }) => {
                 ) : null}
               </Formm.Group>
               <Modal.Footer>
-                <Button variant="primary">Actualizar</Button>
+                <Button variant="primary" type="submit">Actualizar</Button>
                 <Button variant="secondary" onClick={handleClose}>
                   Cerrar
                 </Button>
