@@ -7,7 +7,7 @@ import Error from "../Error";
 import { useMutation, gql } from "@apollo/client";
 import Alertify from "alertify.js";
 
-const UPDATESTATUS =  gql`
+const UPDATESTATUS = gql`
   mutation Mutation($id: ID!, $input: UpdateInputUs!) {
     updateUser(_id: $id, input: $input) {
       _id
@@ -21,7 +21,7 @@ const ActualizarStatus = ({ setShow, estadoEditar }) => {
   const EditarStatus = Yup.object().shape({
     status: Yup.string().required("Ingresa el estado del usuario"),
   });
-  let idUser=estadoEditar._id;
+  let idUser = estadoEditar._id;
   //const valores iniciales
   const initialValues = {
     status: estadoEditar.status,
@@ -31,20 +31,22 @@ const ActualizarStatus = ({ setShow, estadoEditar }) => {
       <Formik
         initialValues={initialValues}
         validationSchema={EditarStatus} //validando el form
-        onSubmit={(values)=>{
+        onSubmit={(values) => {
           //actualizar usuario
           updateUser({
-            variables:{
-              id:idUser,
-              input:{
-                ...values
-              }
-            }
-          }).then(() => {
-            Alertify.success("Usuario modificado con Exito!");
-          }).catch(() => {
-            Alertify.error("Hubo un error!");
-          })  
+            variables: {
+              id: idUser,
+              input: {
+                ...values,
+              },
+            },
+          })
+            .then(() => {
+              Alertify.success("Usuario modificado con Exito!");
+            })
+            .catch(() => {
+              Alertify.error("Hubo un error!");
+            });
           handleClose();
         }}
       >
@@ -69,7 +71,9 @@ const ActualizarStatus = ({ setShow, estadoEditar }) => {
                 ) : null}
               </Formm.Group>
               <Modal.Footer>
-                <Button variant="warning" type="submit">Guardar cambios</Button>
+                <Button variant="warning" type="submit">
+                  Guardar cambios
+                </Button>
                 <Button variant="secondary" onClick={handleClose}>
                   Cancelar
                 </Button>

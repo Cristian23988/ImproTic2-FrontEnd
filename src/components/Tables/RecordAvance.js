@@ -2,14 +2,9 @@ import Button from "react-bootstrap/Button";
 import IconAvance from "../../images/Icons/IconAvance";
 import IconModificar from "../../images/Icons/IconModificar";
 import React, { useState } from "react";
-import ActualizarDescription from "../Formularios/ActualizarDescription";
-import VentanaModal from "../VentanaModal";
 
-const RecorAvance = ({ dato }) => {
-  const { project, addDate, description, observations } = dato;
-  const [avances, setavances] = useState({});
-
-  const [show, setShow] = useState(false);
+const RecorAvance = ({ dato, setShow, setavances }) => {
+  const { _id, project_id, addDate, description, project } = dato;
   const editarAvance = (addDate) => {
     if (addDate === dato.addDate) {
       setavances(dato);
@@ -19,10 +14,10 @@ const RecorAvance = ({ dato }) => {
   return (
     <>
       <tr>
+        <td>{_id}</td>
+        <td>{project_id}</td>
         <td>{addDate}</td>
-        <td className="overflow-scroll">{description}</td>
-        <td>{observations}</td>
-        <td>{project._id}</td>
+        <td>{description}</td>
         <td>{project.name}</td>
         <td>
           <Button variant="warning" onClick={() => editarAvance(addDate)}>
@@ -30,14 +25,6 @@ const RecorAvance = ({ dato }) => {
           </Button>
         </td>
       </tr>
-
-      <VentanaModal
-        titulo="Actualizar Descripcion"
-        setShow={setShow}
-        show={show}
-      >
-        <ActualizarDescription setShow={setShow} />
-      </VentanaModal>
     </>
   );
 };

@@ -1,10 +1,4 @@
-import React, { useState } from "react";
-import { Button } from "react-bootstrap";
-import Modal from "react-bootstrap/Modal";
-import ActualizarIncripciones from "../Formularios/ActualizarIncripciones";
-import VentanaModal from "../VentanaModal";
-
-const RecordIncripciones = ({ dato }) => {
+const RecordIncripciones = ({ dato, setShow, setEstadoEditar }) => {
   const {
     _id,
     project_id,
@@ -15,12 +9,9 @@ const RecordIncripciones = ({ dato }) => {
     project,
     student,
   } = dato;
-
-  const [estado, setEstado] = useState({});
-  const [show, setShow] = useState(false);
-  const editarEstado = (_id) => {
-    if (_id === dato._id) {
-      setEstado(dato);
+  const editarEstado = (id) => {
+    if (id === dato._id) {
+      setEstadoEditar(dato);
     }
     setShow(true);
   };
@@ -37,15 +28,14 @@ const RecordIncripciones = ({ dato }) => {
         <td>{project.name}</td>
         <td>{student.fullName}</td>
         <td>
-          <Button variant="warning" onClick={() => editarEstado(_id)}>
+          <button
+            className="btn btn-warning me-3"
+            onClick={() => editarEstado(_id)}
+          >
             Editar
-          </Button>
+          </button>
         </td>
       </tr>
-
-      <VentanaModal titulo="Actualizar Estado" setShow={setShow} show={show}>
-        <ActualizarIncripciones setShow={setShow} />
-      </VentanaModal>
     </>
   );
 };

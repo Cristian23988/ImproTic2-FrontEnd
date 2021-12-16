@@ -50,8 +50,8 @@ const RegistroUsuario = Yup.object().shape({
 const NuevaIncripcion = ({ setShow }) => {
   const [registerUser] = useMutation(nuevaIncripcion);
 
-  const { data, loading: loadingProyect } = useQuery(AllProjects);
-
+  const { data, loading: loadingProyec } = useQuery(AllProjects);
+  console.log(data);
   return (
     <>
       <Formik
@@ -86,7 +86,13 @@ const NuevaIncripcion = ({ setShow }) => {
                     errors.project && touched.project && "is-invalid"
                   } `}
                 >
-                  <option value="">--Selecciona un rol--</option>
+                  <option value="">--Selecciona un proyecto--</option>
+                  {!loadingProyec &&
+                    data.AllProjects.map((_id, name) => (
+                      <option key={_id} value={_id}>
+                        {name}
+                      </option>
+                    ))}
                 </Field>
                 {errors.role && touched.role ? (
                   <Error>{errors.role}</Error>
