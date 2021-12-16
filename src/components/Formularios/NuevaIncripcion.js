@@ -12,52 +12,52 @@ const nuevaIncripcion = gql`
   mutation RegisterEnrollment($input: RegiInputEn!) {
     registerEnrollment(input: $input) {
       _id
-      project_id
-      user_id
-      enrollmentDate
-      egressDate
-      project {
-        _id
-        name
-      }
-      student {
-        _id
-        documentId
-      }
     }
   }
 `;
 
 const AllProjects = gql`
-  query AllProjects {
+  query Query {
     allProjects {
       _id
       name
     }
   }
 `;
-const initialValues = {
-  project: "",
-  student: "",
-  status: "",
-};
+
 //Funcion para validar el formulario
 const RegistroUsuario = Yup.object().shape({
   project: Yup.string().required("Selecciona un proyecto"),
-  student: Yup.number().required("La identificacion es obligatoria"),
-  status: Yup.string().required("El estado es obligatorio"),
+  student: Yup.string().required("La identificacion es obligatoria"),
 });
-const NuevaIncripcion = ({ setShow }) => {
-  const [registerUser] = useMutation(nuevaIncripcion);
 
-  const { data, loading: loadingProyec } = useQuery(AllProjects);
-  console.log(data);
+const NuevaIncripcion = ({ setShow, user }) => {
+  const handleClose = () => setShow(false);
+  const [regisIncripciones] = useMutation(nuevaIncripcion);
+  const { data, loading: loadingProyect } = useQuery(AllProjects);
+  const obtenerFecha = () => {
+    let fechaHoy = "";
+    let fechaActual = new Date();
+    let year = fechaActual.getFullYear();
+    let month = fechaActual.getMonth() + 1;
+    let day = fechaActual.getDate();
+    fechaHoy = year + "-" + month + "-" + day;
+    return fechaHoy;
+  };
+  const initialValues = {
+    project_id: "",
+    user_id: user.userSesion._id,
+    enrollmentDate: obtenerFecha(),
+    status: "reject",
+    project: "",
+    student: user.userSesion._id,
+  };
   return (
     <>
       <Formik
         initialValues={initialValues}
         onSubmit={(values, { resetForm }) => {
-          registerUser({
+          regisIncripciones({
             variables: {
               input: {
                 ...values,
@@ -87,25 +87,25 @@ const NuevaIncripcion = ({ setShow }) => {
                   } `}
                 >
                   <option value="">--Selecciona un proyecto--</option>
-                  {!loadingProyec &&
-                    data.AllProjects.map((_id, name) => (
+                  {!loadingProyect &&
+                    data.allProjects.map(({ _id, name }, index) => (
                       <option key={_id} value={_id}>
                         {name}
                       </option>
                     ))}
                 </Field>
-                {errors.role && touched.role ? (
-                  <Error>{errors.role}</Error>
+                {errors.project && touched.project ? (
+                  <Error>{errors.project}</Error>
                 ) : null}
               </Formm.Group>
 
               <Formm.Group className="m-2">
-                <Formm.Label className="fw-bold">Ustudiante</Formm.Label>
+                <Formm.Label className="fw-bold">Estudiante</Formm.Label>
                 <Field
                   className={`form-control ${
                     errors.student && touched.student && "is-invalid"
                   } `}
-                  type="number"
+                  type="text"
                   name="student"
                   placeholder="Ingresa tu identificacion"
                 />
@@ -115,19 +115,28 @@ const NuevaIncripcion = ({ setShow }) => {
               </Formm.Group>
 
               <Formm.Group className="m-2">
-                <Formm.Label className="fw-bold">Nombre</Formm.Label>
+                <Formm.Label className="fw-bold">Fecha</Formm.Label>
                 <Field
                   className={`form-control ${
-                    errors.status && touched.status && "is-invalid"
+                    errors.enrollmentDate &&
+                    touched.enrollmentDate &&
+                    "is-invalid"
                   } `}
-                  type="text"
-                  name="status"
-                  placeholder="Ingresa tu nombre"
+                  type="date"
+                  name="enrollmentDate"
                 />
-                {errors.status && touched.status ? (
-                  <Error>{errors.status}</Error>
+                {errors.enrollmentDate && touched.enrollmentDate ? (
+                  <Error>{errors.enrollmentDate}</Error>
                 ) : null}
               </Formm.Group>
+              <Modal.Footer className="mt-3">
+                <Button variant="primary" type="submit">
+                  Incribirme
+                </Button>
+                <Button variant="secondary" onClick={handleClose}>
+                  Cancelar
+                </Button>
+              </Modal.Footer>
             </Form>
           );
         }}
@@ -136,9 +145,3 @@ const NuevaIncripcion = ({ setShow }) => {
   );
 };
 export default NuevaIncripcion;
-/* {!loadingProyect &&
-                    data.AllProjects.map(({ _id, name }, index) => (
-                      <option key={index} value={name}>
-                        {name}
-                      </option>
-                    ))}*/

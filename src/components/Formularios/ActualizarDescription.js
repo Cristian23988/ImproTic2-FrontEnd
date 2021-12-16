@@ -52,7 +52,7 @@ const ActualizarDescription = ({ setShow, estado }) => {
           return (
             <Form>
               <Formm.Group>
-                <Formm.Label>Estado</Formm.Label>
+                <Formm.Label>Descripción</Formm.Label>
                 <Field
                   className={`form-control ${
                     errors.status && touched.status && "is-invalid"
