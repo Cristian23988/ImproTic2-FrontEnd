@@ -17,7 +17,7 @@ import { onError } from "@apollo/client/link/error";
 //direccion de la api
 const httpLink = new HttpLink({
   // eslint-disable-next-line no-undef
-  uri: "http://localhost:4000/graphql",
+  uri: "https://improtic-backend.herokuapp.com/graphql",
 });
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
