@@ -27,30 +27,17 @@ const AllProjects = gql`
 
 //Funcion para validar el formulario
 const RegistroUsuario = Yup.object().shape({
-  project: Yup.string().required("Selecciona un proyecto"),
-  student: Yup.string().required("La identificacion es obligatoria"),
+  project_id: Yup.string().required("Selecciona un proyecto"),
 });
 
 const NuevaIncripcion = ({ setShow, user }) => {
   const handleClose = () => setShow(false);
   const [regisIncripciones] = useMutation(nuevaIncripcion);
   const { data, loading: loadingProyect } = useQuery(AllProjects);
-  const obtenerFecha = () => {
-    let fechaHoy = "";
-    let fechaActual = new Date();
-    let year = fechaActual.getFullYear();
-    let month = fechaActual.getMonth() + 1;
-    let day = fechaActual.getDate();
-    fechaHoy = year + "-" + month + "-" + day;
-    return fechaHoy;
-  };
+
   const initialValues = {
     project_id: "",
     user_id: user.userSesion._id,
-    enrollmentDate: "",
-    status: "reject",
-    project: "",
-    student: user.userSesion._id,
   };
   return (
     <>
@@ -70,6 +57,7 @@ const NuevaIncripcion = ({ setShow, user }) => {
             })
             .catch(() => {
               Alertify.error("Hubo un error!");
+              console.log("Hola");
             });
         }}
         validationSchema={RegistroUsuario} //validando el form
@@ -81,9 +69,9 @@ const NuevaIncripcion = ({ setShow, user }) => {
                 <Formm.Label className="fw-bold">Proyecto</Formm.Label>
                 <Field
                   as="select"
-                  name="project"
+                  name="project_id"
                   className={`form-control ${
-                    errors.project && touched.project && "is-invalid"
+                    errors.project_id && touched.project_id && "is-invalid"
                   } `}
                 >
                   <option value="">--Selecciona un proyecto--</option>
@@ -94,8 +82,8 @@ const NuevaIncripcion = ({ setShow, user }) => {
                       </option>
                     ))}
                 </Field>
-                {errors.project && touched.project ? (
-                  <Error>{errors.project}</Error>
+                {errors.project_id && touched.project_id ? (
+                  <Error>{errors.project_id}</Error>
                 ) : null}
               </Formm.Group>
 
