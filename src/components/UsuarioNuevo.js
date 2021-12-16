@@ -6,14 +6,13 @@ import IconClave from "../images/Icons/IconClave";
 import IconNombre from "../images/Icons/IconNombre";
 import IconIdentificacion from "../images/Icons/IconIdentificacion";
 import Boton from "./Buttons";
-import { useMutation, useQuery, gql } from '@apollo/client';
+import { useMutation, useQuery, gql } from "@apollo/client";
 
 import Error from "./Error";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import IconRegistrer from "../images/Icons/IconRegistrer";
 import Alertify from "alertify.js";
-
 
 const REGISTERUSER = gql`
   mutation RegisterUser($input: RegisterInputUs!) {
@@ -23,7 +22,7 @@ const REGISTERUSER = gql`
   }
 `;
 
-const ROLES = gql `
+const ROLES = gql`
   query Query {
     roles {
       code
@@ -31,10 +30,10 @@ const ROLES = gql `
     }
   }
 `;
- //const valores iniciales
- const initialValues = {
+//const valores iniciales
+const initialValues = {
   email: "",
-  documentId:"",
+  documentId: "",
   name: "",
   lastName: "",
   role: "",
@@ -52,7 +51,6 @@ const RegistroUsuario = Yup.object().shape({
   password: Yup.string().required("La clave es obligatoria"),
 });
 const UsuarioNuevo = () => {
-
   const [registerUser] = useMutation(REGISTERUSER);
   const { data, loading: loadingRoles } = useQuery(ROLES);
 
@@ -62,17 +60,19 @@ const UsuarioNuevo = () => {
         initialValues={initialValues}
         onSubmit={(values, { resetForm }) => {
           registerUser({
-            variables:{
-              input:{
-                ...values
-              }
-            }
-          }).then(() => {
-            Alertify.success("Usuario Registrado Con Exito!");
-            resetForm();
-          }).catch(() => {
-            Alertify.error("Hubo un error!");
+            variables: {
+              input: {
+                ...values,
+              },
+            },
           })
+            .then(() => {
+              Alertify.success("Usuario Registrado Con Exito!");
+              resetForm();
+            })
+            .catch(() => {
+              Alertify.error("Hubo un error!");
+            });
         }}
         validationSchema={RegistroUsuario} //validando el form
       >
@@ -158,7 +158,12 @@ const UsuarioNuevo = () => {
                   } `}
                 >
                   <option value="">--Selecciona un rol--</option>
-                  {!loadingRoles && data.roles.map(({ code, value}, index) => <option key={index} value={code}>{value}</option>)}
+                  {!loadingRoles &&
+                    data.roles.map(({ code, value }, index) => (
+                      <option key={index} value={code}>
+                        {value}
+                      </option>
+                    ))}
                 </Field>
                 {errors.role && touched.role ? (
                   <Error>{errors.role}</Error>

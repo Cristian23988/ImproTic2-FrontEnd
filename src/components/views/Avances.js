@@ -4,28 +4,31 @@ import Footer from "../Footer";
 import { Table } from "react-bootstrap";
 import RecordAvance from "../Tables/RecordAvance";
 import React, { useState, useEffect } from "react";
-
 import Spinner from "../Formularios/Spinner";
 import Alertify from "alertify.js";
+import ActualizarDescription from "../Formularios/ActualizarDescription";
+import VentanaModal from "../VentanaModal";
 import { useMutation, useQuery, gql } from "@apollo/client";
-const Avances = () => {
-  const [datos, setdatos] = useState([]);
-  const [modal, setShow] = useState(false);
-  const allAdvances = gql`
-    query allAdvances {
-      allAdvances {
-        addDate
-        description
-        observations
-        project {
-          _id
-          name
-        }
+
+const allAdvances = gql`
+  query AllAdvances {
+    allAdvances {
+      _id
+      project_id
+      addDate
+      description
+      project {
+        _id
+        name
       }
     }
-  `;
-
+  }
+`;
+const Avances = () => {
+  const [estado, setavances] = useState({});
+  const [show, setShow] = useState(false);
   const { data, error, loading } = useQuery(allAdvances);
+
   useEffect(() => {
     if (error) {
       Alertify.error("Hubo un error!");
@@ -33,7 +36,6 @@ const Avances = () => {
   }, [error]);
 
   if (loading) return <Spinner />;
-
   return (
     <>
       <Menu />
@@ -43,22 +45,35 @@ const Avances = () => {
           <Table striped bordered hover size="sm">
             <thead>
               <tr>
+                <th>id</th>
+                <th>Id projecto</th>
                 <th>Fecha</th>
                 <th>Descripcion</th>
-                <th>Observacion</th>
-                <th>Id Projecto</th>
                 <th> Projecto</th>
                 <th>Opciones</th>
               </tr>
             </thead>
             <tbody>
               {data.allAdvances.map((dato) => (
-                <RecordAvance key={dato.addDate} dato={dato} />
+                <RecordAvance
+                  key={dato._id}
+                  dato={dato}
+                  setShow={setShow}
+                  setavances={setavances}
+                />
               ))}
             </tbody>
           </Table>
         </div>
       </ContenidoMenu>
+
+      <VentanaModal
+        titulo="Actualizar Descripcion"
+        setShow={setShow}
+        show={show}
+      >
+        <ActualizarDescription setShow={setShow} estado={estado} />
+      </VentanaModal>
     </>
   );
 };

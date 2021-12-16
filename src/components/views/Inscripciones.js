@@ -6,36 +6,36 @@ import { Table, Button } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
 import Spinner from "../Formularios/Spinner";
 import Alertify from "alertify.js";
-import VentanModal from "../VentanaModal";
+import VentanaModal from "../VentanaModal";
 import NuevaIncripcion from "../Formularios/NuevaIncripcion";
 import { useMutation, useQuery, gql } from "@apollo/client";
 import RecordIncripciones from "../Tables/RecordIncripciones";
-const Inscripciones = () => {
-  const allEnrollments = gql`
-    query AllEnrollments {
-      allEnrollments {
+import ActualizarIncripciones from "../Formularios/ActualizarIncripciones";
+const allEnrollments = gql`
+  query AllEnrollments {
+    allEnrollments {
+      _id
+      project_id
+      user_id
+      status
+      enrollmentDate
+      egressDate
+      project {
         _id
-        project_id
-        user_id
-        status
-        enrollmentDate
-        egressDate
-        project {
-          _id
-          name
-        }
-        student {
-          _id
-          fullName
-        }
+        name
+      }
+      student {
+        _id
+        fullName
       }
     }
-  `;
-
+  }
+`;
+const Inscripciones = () => {
   const { data, error, loading } = useQuery(allEnrollments);
-
   const [show, setShow] = useState(false);
-  console.log(data);
+  const [estadoEditar, setEstadoEditar] = useState({});
+
   useEffect(() => {
     if (error) {
       Alertify.error("Hubo un error!");
@@ -68,16 +68,27 @@ const Inscripciones = () => {
             </thead>
             <tbody>
               {data.allEnrollments.map((dato) => (
-                <RecordIncripciones key={dato._id} dato={dato} />
+                <RecordIncripciones
+                  key={dato._id}
+                  dato={dato}
+                  setShow={setShow}
+                  setEstadoEditar={setEstadoEditar}
+                />
               ))}
             </tbody>
           </Table>
         </div>
       </ContenidoMenu>
-      <VentanModal titulo="Nueva Incripcion" setShow={setShow} show={show}>
-        <NuevaIncripcion setShow={setShow} />
-      </VentanModal>
+
+      <VentanaModal titulo="Actualizar Estado" setShow={setShow} show={show}>
+        <ActualizarIncripciones setShow={setShow} estadoEditar={estadoEditar} />
+      </VentanaModal>
     </>
   );
 };
 export default Inscripciones;
+/*   
+
+  <VentanaModal titulo="Nueva Incripcion" setShow={setShow} show={show}>
+        <NuevaIncripcion setShow={setShow} />
+      </VentanaModal>*/

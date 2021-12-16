@@ -4,28 +4,49 @@ import Formm from "react-bootstrap/Form";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import Error from "../Error";
-const ActuailizarIncripciones = ({ setShow }) => {
+import { useMutation, gql } from "@apollo/client";
+import Alertify from "alertify.js";
+const UpdateEnrollment = gql`
+  mutation Mutation($id: ID!, $input: UpdateInputEn!) {
+    updateEnrollment(_id: $id, input: $input) {
+      _id
+    }
+  }
+`;
+const ActuailizarIncripciones = ({ setShow, estadoEditar }) => {
   const handleClose = () => setShow(false);
-
+  const [updateStatus] = useMutation(UpdateEnrollment);
+  console.log(updateStatus);
   const editarEstado = Yup.object().shape({
-    status: Yup.string("El estado es obligadorio !"),
+    status: Yup.string().required("El estado es obligadorio !"),
   });
-
+  let idincripcion = estadoEditar._id;
   const initialValues = {
-    status: "",
+    status: estadoEditar.status,
   };
-  const handleSubmit = () => {
-    console.log("hola");
-  };
+
   return (
     <>
       <Formik
         initialValues={initialValues}
-        onSubmit={async (values, { resetForm }) => {
-          await handleSubmit(values);
-          resetForm();
-        }}
         validationSchema={editarEstado} //validando el form
+        onSubmit={(values) => {
+          updateStatus({
+            variables: {
+              id: idincripcion,
+              input: {
+                ...values,
+              },
+            },
+          })
+            .then(() => {
+              Alertify.success("Usuario modificado con Exito!");
+            })
+            .catch(() => {
+              Alertify.error("Hubo un error!");
+            });
+          handleClose();
+        }}
       >
         {({ errors, touched }) => {
           return (
@@ -40,15 +61,17 @@ const ActuailizarIncripciones = ({ setShow }) => {
                   name="status"
                 >
                   <option value="">--Seleccione una opcion--</option>
-                  <option value="active">Activo</option>
-                  <option value="pending">Inactivo</option>
+                  <option value="acepted">Activo</option>
+                  <option value="rejected">Inactivo</option>
                 </Field>
                 {errors.status && touched.status ? (
                   <Error>{errors.status}</Error>
                 ) : null}
               </Formm.Group>
               <Modal.Footer>
-                <Button variant="warning">Editar</Button>
+                <Button variant="warning" type="submit">
+                  Editar cambios
+                </Button>
                 <Button variant="secondary" onClick={handleClose}>
                   Cancelar
                 </Button>
