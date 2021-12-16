@@ -34,25 +34,25 @@ const MenuPrincipal = () => {
   var URLactual = window.location.href;
 
   useEffect(() => {
-    if (URLactual === "http://localhost:3000/menu/usuarios") {
+    if (URLactual === "https://improtic-frontend.herokuapp.com/menu/usuarios") {
       setLinkUsuarios("active");
       setLinkProyectos("");
       setLinkAvances("");
       setLinkHome("");
       setLinkInscripciones("");
-    } else if (URLactual === "http://localhost:3000/menu/proyectos") {
+    } else if (URLactual === "https://improtic-frontend.herokuapp.com/menu/proyectos") {
       setLinkUsuarios("");
       setLinkProyectos("active");
       setLinkAvances("");
       setLinkHome("");
       setLinkInscripciones("");
-    } else if (URLactual === "http://localhost:3000/menu/avances") {
+    } else if (URLactual === "https://improtic-frontend.herokuapp.com/menu/avances") {
       setLinkUsuarios("");
       setLinkProyectos("");
       setLinkAvances("active");
       setLinkHome("");
       setLinkInscripciones("");
-    } else if (URLactual === "http://localhost:3000/menu/inscripciones") {
+    } else if (URLactual === "https://improtic-frontend.herokuapp.com/menu/inscripciones") {
       setLinkUsuarios("");
       setLinkProyectos("");
       setLinkAvances("");
