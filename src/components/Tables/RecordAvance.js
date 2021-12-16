@@ -34,14 +34,20 @@ const RecorAvance = ({
         <td>{project.name}</td>
         <th>{project.status}</th>
         <td>
-          <Button variant="warning" onClick={() => editarAvance(_id)}>
-            Editar
+          <Button
+            variant="warning text-white"
+            onClick={() => editarAvance(_id)}
+          >
+            D
           </Button>
         </td>
         {project.status === "active" ? (
           <td>
-            <Button variant="warning" onClick={() => editarDescription(_id)}>
-              Editar
+            <Button
+              variant="warning text-white"
+              onClick={() => editarDescription(_id)}
+            >
+              O
             </Button>
           </td>
         ) : null}
