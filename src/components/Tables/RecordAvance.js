@@ -1,8 +1,4 @@
 import Button from "react-bootstrap/Button";
-import IconAvance from "../../images/Icons/IconAvance";
-import IconModificar from "../../images/Icons/IconModificar";
-import React, { useState } from "react";
-
 const RecorAvance = ({
   dato,
   setShow,
@@ -10,6 +6,7 @@ const RecorAvance = ({
   contador,
   setDesc,
   setdescripcionoEditar,
+  user,
 }) => {
   const { _id, project_id, addDate, description, observations, project } = dato;
   const editarAvance = (_id) => {
@@ -32,16 +29,18 @@ const RecorAvance = ({
         <td>{description}</td>
         <th>{observations}</th>
         <td>{project.name}</td>
-        <th>{project.status}</th>
-        <td>
-          <Button
-            variant="warning text-white"
-            onClick={() => editarAvance(_id)}
-          >
-            D
-          </Button>
-        </td>
-        {project.status === "active" ? (
+        <td>{project.status}</td>
+        {user.userSesion.role === "leader" ? (
+          <td>
+            <Button
+              variant="warning text-white"
+              onClick={() => editarAvance(_id)}
+            >
+              D
+            </Button>
+          </td>
+        ) : null}
+        {user.userSesion.role === "student" && project.status === "active" ? (
           <td>
             <Button
               variant="warning text-white"
