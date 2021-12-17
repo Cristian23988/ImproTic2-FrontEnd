@@ -10,7 +10,7 @@ import ActualizarDescription from "../Formularios/ActualizarDescription";
 import ActualizarObservacion from "../Formularios/ActualizarObservacion";
 import VentanaModal from "../VentanaModal";
 import { useMutation, useQuery, gql } from "@apollo/client";
-
+import jwt_decode from "jwt-decode";
 const allAdvances = gql`
   query Query {
     allAdvances {
@@ -33,6 +33,7 @@ const Avances = () => {
   const [show, setShow] = useState(false);
   const [descripcionEditar, setdescripcionoEditar] = useState({});
   const { data, error, loading } = useQuery(allAdvances);
+  const user = jwt_decode(sessionStorage.getItem("token"));
   let contador = 0;
   useEffect(() => {
     if (error) {
@@ -71,6 +72,7 @@ const Avances = () => {
                   setdescripcionoEditar={setdescripcionoEditar}
                   setDesc={setDesc}
                   contador={(contador += 1)}
+                  user={user}
                 />
               ))}
             </tbody>
