@@ -130,34 +130,35 @@ const MenuPrincipal = () => {
         >
           <IconProyectos /> Proyectos
         </Link>
-        <Link
-          to="/menu/avances"
-          className={`${linkAvances} nav-link text-white text-center`}
-          onClick={() => {
-            setLinkUsuarios("");
-            setLinkHome("");
-            setLinkProyectos("");
-            setLinkAvances("active");
-          }}
-        >
-          <IconAvance /> Avances
-        </Link>
-        <Link
-          to="/menu/inscripciones"
-          className={`${linkInscripciones} nav-link text-white text-center`}
-          onClick={() => {
-            setLinkUsuarios("");
-            setLinkHome("");
-            setLinkProyectos("");
-            setLinkAvances("");
-            setLinkInscripciones("active");
-          }}
-        >
-          <IconInscripcion /> Inscripciones
-        </Link>
-        {/* <Nav.Link eventKey="disabled"  disabled>
-                    Disabled
-                </Nav.Link> */}
+        {user.userSesion.role==="admin" ? null:(
+          <>
+            <Link
+              to="/menu/avances"
+              className={`${linkAvances} nav-link text-white text-center`}
+              onClick={() => {
+                setLinkUsuarios("");
+                setLinkHome("");
+                setLinkProyectos("");
+                setLinkAvances("active");
+              }}
+            >
+              <IconAvance /> Avances
+            </Link>
+            <Link
+              to="/menu/inscripciones"
+              className={`${linkInscripciones} nav-link text-white text-center`}
+              onClick={() => {
+                setLinkUsuarios("");
+                setLinkHome("");
+                setLinkProyectos("");
+                setLinkAvances("");
+                setLinkInscripciones("active");
+              }}
+            >
+              <IconInscripcion /> Inscripciones
+            </Link>
+          </>
+        )}
       </Nav>
     </>
   );
