@@ -84,6 +84,9 @@ const RecordProyectos = ({
           <td>{leader.name}</td>
           <td>{status}</td>
           <td>{phase}</td>
+          <td>
+            <Button variant='warning' onClick={()=>editarProyecto(_id)}>Editar</Button>
+          </td>
         </tr>
         <VentanaModal
           titulo="Objetivos especificos"
