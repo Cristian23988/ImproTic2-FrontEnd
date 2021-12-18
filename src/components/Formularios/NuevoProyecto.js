@@ -49,6 +49,7 @@ const NuevoProyecto=({ setShowNuevo, user })=>{
     generalObjective:Yup.string().required("El objetivo general es obligatorio!"),
     specificObjectives: Yup.string().required("Los objetivos especificos son obligatorios!"),
     budget:Yup.number().required("El presupuestoes obligatorio!"),
+    endDate:Yup.date().required("La fecha de fin es obligatoria")
   });
   //const valores iniciales
   const initialValues = {
@@ -56,9 +57,10 @@ const NuevoProyecto=({ setShowNuevo, user })=>{
     generalObjective: "",
     specificObjectives:"",
     budget:"",
+    startDate: obtenerFecha(),
+    endDate: "",
   }; 
   const handleSubmit = (values) =>{
-    console.log('hola')
     values.specificObjectives=values.specificObjectives.split(';')
     registerProject({
       variables:{
@@ -144,7 +146,7 @@ const NuevoProyecto=({ setShowNuevo, user })=>{
                   <Error>{errors.budget}</Error>
                 ) : null}
               </Formm.Group>
-              {/* <Formm.Group>
+              <Formm.Group>
                 <Formm.Label>Fecha de inicio</Formm.Label>
                 <Field
                   className={`form-control ${
@@ -156,8 +158,8 @@ const NuevoProyecto=({ setShowNuevo, user })=>{
                 {errors.startDate && touched.startDate ? (
                   <Error>{errors.startDate}</Error>
                 ) : null}
-              </Formm.Group> */}
-              {/* <Formm.Group>
+              </Formm.Group>
+              <Formm.Group>
                 <Formm.Label>Fecha de fin</Formm.Label>
                 <Field
                   className={`form-control ${
@@ -169,21 +171,7 @@ const NuevoProyecto=({ setShowNuevo, user })=>{
                 {errors.endDate && touched.endDate ? (
                   <Error>{errors.endDate}</Error>
                 ) : null}
-              </Formm.Group> */}
-              {/* <Formm.Group>
-                <Formm.Label>Lider de proyecto</Formm.Label>
-                <Field
-                  className={`form-control ${
-                    errors.leader_id && touched.leader_id && "is-invalid"
-                  } `}
-                  type="text"
-                  name="leader_id"
-                  disabled={true}
-                />
-                {errors.leader_id && touched.leader_id ? (
-                  <Error>{errors.leader_id}</Error>
-                ) : null}
-              </Formm.Group> */}
+              </Formm.Group>
               <Modal.Footer className="mt-3"> 
                 <Boton variante="primary" tipo="submit" clase="" > 
                   Agregar proyecto
