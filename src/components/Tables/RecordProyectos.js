@@ -84,6 +84,11 @@ const RecordProyectos = ({
           <td>{leader.name}</td>
           <td>{status}</td>
           <td>{phase}</td>
+          {user.userSesion.role==='admin' || user.userSesion.role==='leader' ? (
+            <td>
+              <Button variant='warning' onClick={()=>editarProyecto(_id)}>Editar</Button>
+            </td>
+          ):null}   
         </tr>
         <VentanaModal
           titulo="Objetivos especificos"

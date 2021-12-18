@@ -1,4 +1,5 @@
 import Button from "react-bootstrap/Button";
+
 const RecorAvance = ({
   dato,
   setShow,
