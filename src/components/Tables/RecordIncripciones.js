@@ -21,6 +21,15 @@ const RecordIncripciones = ({
     }
     setestado(true);
   };
+  const formatearFecha = (fecha) => {
+    let fechaInt = parseInt(fecha);
+    const opciones = {
+      year: "numeric",
+      month: "long",
+      day: "2-digit",
+    };
+    return new Date(fechaInt).toLocaleDateString("es-ES", opciones);
+  };
   return (
     <>
       <tr>
@@ -28,8 +37,8 @@ const RecordIncripciones = ({
         <td>{project.name}</td>
         <td>{student.fullName}</td>
         <td>{status}</td>
-        <td>{enrollmentDate}</td>
-        <td>{egressDate}</td>
+        <td>{formatearFecha(enrollmentDate)}</td>
+        <td>{formatearFecha(egressDate)}</td>
         {user.userSesion.role === "leader" ? (
           <td>
             <button
