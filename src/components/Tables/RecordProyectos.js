@@ -26,13 +26,13 @@ const RecordProyectos = ({
   } = dato;
 
   const formatearFecha = (fecha) => {
-    const fechaNueva = fecha;
+    let fechaNueva = parseInt(fecha);
     const opciones = {
       year: "numeric",
       month: "long",
       day: "2-digit",
-    };
-    return fechaNueva.toLocaleString("es-ES", opciones);
+    }; 
+    return new Date(fechaNueva).toLocaleString("es-ES", opciones);
   };
   //funcion para añadir ; al final de cada objetivo especifico
   const separarStringCaracter = (objetivos) => {
