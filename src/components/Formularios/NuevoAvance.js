@@ -78,7 +78,7 @@ const NuevoAvance = ({ setavance }) => {
                   {!loadingProyect &&
                     data.allProjects.map(({ _id, name }, index) => (
                       <option key={_id} value={_id}>
-                        {_id}
+                        {name}
                       </option>
                     ))}
                 </Field>
