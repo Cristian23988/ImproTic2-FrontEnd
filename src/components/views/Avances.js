@@ -53,7 +53,7 @@ const Avances = () => {
         <div className="d-flex justify-content-starst flex-row gap-5 flex-wrap w-100 p-5 overflow-scroll shadow">
           {user.userSesion.role === "student" ? (
             <button className="btn btn-primary" onClick={setavance}>
-              Nueva Avance
+              Nuevos Avances
             </button>
           ) : null}
           <Table striped bordered hover size="sm">
