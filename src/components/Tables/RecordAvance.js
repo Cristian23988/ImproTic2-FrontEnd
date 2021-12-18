@@ -27,7 +27,7 @@ const RecorAvance = ({
         <td>{contador}</td>
         <td>{addDate}</td>
         <td>{description}</td>
-        <th>{observations}</th>
+        <th>{observations ? observations : null}</th>
         <td>{project.name}</td>
         <td>{project.status}</td>
         {user.userSesion.role === "leader" ? (

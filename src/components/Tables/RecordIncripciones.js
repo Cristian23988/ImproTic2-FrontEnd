@@ -21,15 +21,6 @@ const RecordIncripciones = ({
     }
     setestado(true);
   };
-  const formatearFecha = (fecha) => {
-    const fechaNueva = new Date(fecha);
-    const opciones = {
-      year: "numeric",
-      month: "long",
-      day: "2-digit",
-    };
-    return fechaNueva.toLocaleString("es-ES", opciones);
-  };
   return (
     <>
       <tr>
@@ -37,7 +28,7 @@ const RecordIncripciones = ({
         <td>{project.name}</td>
         <td>{student.fullName}</td>
         <td>{status}</td>
-        <td>{formatearFecha(enrollmentDate)}</td>
+        <td>{enrollmentDate}</td>
         <td>{egressDate}</td>
         {user.userSesion.role === "leader" ? (
           <td>

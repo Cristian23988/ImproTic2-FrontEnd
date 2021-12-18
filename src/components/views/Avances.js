@@ -11,6 +11,7 @@ import ActualizarObservacion from "../Formularios/ActualizarObservacion";
 import VentanaModal from "../VentanaModal";
 import { useMutation, useQuery, gql } from "@apollo/client";
 import jwt_decode from "jwt-decode";
+import NuevoAvance from "../Formularios/NuevoAvance";
 const allAdvances = gql`
   query Query {
     allAdvances {
@@ -27,10 +28,12 @@ const allAdvances = gql`
     }
   }
 `;
+
 const Avances = () => {
   const [estado, setavances] = useState({});
   const [des, setDesc] = useState(false);
   const [show, setShow] = useState(false);
+  const [avance, setavance] = useState(false);
   const [descripcionEditar, setdescripcionoEditar] = useState({});
   const { data, error, loading } = useQuery(allAdvances);
   const user = jwt_decode(sessionStorage.getItem("token"));
@@ -48,6 +51,11 @@ const Avances = () => {
       <ContenidoMenu>
         <h1 className="fst-italic">Gestionar avances</h1>
         <div className="d-flex justify-content-starst flex-row gap-5 flex-wrap w-100 p-5 overflow-scroll shadow">
+          {user.userSesion.role === "student" ? (
+            <button className="btn btn-primary" onClick={setavance}>
+              Nueva Avance
+            </button>
+          ) : null}
           <Table striped bordered hover size="sm">
             <thead>
               <tr>
@@ -97,6 +105,10 @@ const Avances = () => {
           setDesc={setDesc}
           descripcionEditar={descripcionEditar}
         />
+      </VentanaModal>
+
+      <VentanaModal titulo="Nuevo Avance" setShow={setavance} show={avance}>
+        <NuevoAvance setavance={setavance} />
       </VentanaModal>
     </>
   );
