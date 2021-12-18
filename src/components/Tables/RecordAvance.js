@@ -22,11 +22,20 @@ const RecorAvance = ({
     }
     setDesc(true);
   };
+  const formatearFecha = (fecha) => {
+    let fechaInt = parseInt(fecha);
+    const opciones = {
+      year: "numeric",
+      month: "long",
+      day: "2-digit",
+    };
+    return new Date(fechaInt).toLocaleDateString("es-ES", opciones);
+  };
   return (
     <>
       <tr>
         <td>{contador}</td>
-        <td>{addDate}</td>
+        <td>{formatearFecha(addDate)}</td>
         <td>{description}</td>
         <th>{observations}</th>
         <td>{project.name}</td>
