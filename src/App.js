@@ -11,11 +11,11 @@ import jwt_decode from "jwt-decode";
 import PrivateRoute from "./PrivateRoute";
 
 function App() {
-  const token=sessionStorage.getItem("token"); 
-  const user = token ? jwt_decode(token):'';
+  const token = sessionStorage.getItem("token");
+  const user = token ? jwt_decode(token) : "";
   return (
     <>
-      <BrowserRouter>  
+      <BrowserRouter>
         <Routes>
           <Route>
             <Route index path="/" element={<Login />} />
@@ -23,36 +23,53 @@ function App() {
             <Route exact path="no-access" element={<NoAccess />} />
           </Route>
           <Route>
-            <Route index path="menu/home" element={
+            <Route
+              index
+              path="menu/home"
+              element={
                 <PrivateRoute>
                   <Home />
                 </PrivateRoute>
-              } 
+              }
             />
-            <Route exact path="menu/usuarios" element={
-              <PrivateRoute>
-                <Usuarios />
-              </PrivateRoute>
-              } 
-            />            
-            <Route exact path="menu/proyectos" element={
-              <PrivateRoute>
-                <Proyectos />
-              </PrivateRoute>             
-            } />
-            <Route exact path="menu/avances" element={
-              <PrivateRoute>
-                <Avances />
-              </PrivateRoute>
-              } 
+            <Route
+              exact
+              path="menu/usuarios"
+              element={
+                <PrivateRoute>
+                  <Usuarios />
+                </PrivateRoute>
+              }
             />
-            <Route exact path="menu/inscripciones" element={
-              <PrivateRoute>
-                <Inscripciones/>
-              </PrivateRoute>
-            }/>          
+            <Route
+              exact
+              path="menu/proyectos"
+              element={
+                <PrivateRoute>
+                  <Proyectos />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              exact
+              path="menu/avances"
+              element={
+                <PrivateRoute>
+                  <Avances />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              exact
+              path="menu/inscripciones"
+              element={
+                <PrivateRoute>
+                  <Inscripciones />
+                </PrivateRoute>
+              }
+            />
           </Route>
-        </Routes>                          
+        </Routes>
       </BrowserRouter>
     </>
   );

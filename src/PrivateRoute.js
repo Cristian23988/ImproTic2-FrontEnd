@@ -1,14 +1,29 @@
-import { useLocation, Navigate } from "react-router-dom";
+import { Route, Redirect } from "react-router-dom";
 
-const PrivateRoute = ({ children }) => {
-  let token = sessionStorage.getItem("token");
-  let location=useLocation();
-  if(!token){
-    return (
-      <Navigate to="/" state={{ from: location }}/>
-    );
-  }
-  return children;
+import React, { useContext, useEffect } from "react";
+import { Route, Redirect } from "react-router-dom";
+import AuthContext from "../../context/autenticacion/authContext";
+const PrivateRoute = () => {
+  const authContext = useContext(AuthContext);
+  const { autenticado, cargando, usuarioAutenticado } = authContext;
+
+  useEffect(() => {
+    usuarioAutenticado();
+    // eslint-disable-next-line
+  }, []);
+
+  return (
+    <Route
+      {...props}
+      render={(props) =>
+        !autenticado && !cargando ? (
+          <Redirect to="/" />
+        ) : (
+          <Component {...props} />
+        )
+      }
+    />
+  );
 };
 
 export default PrivateRoute;
